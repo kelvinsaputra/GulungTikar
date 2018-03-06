@@ -36,11 +36,9 @@
                     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
                     <form action="" method="post">
                         <div class="form-group">
-                            <label for="inputEmail">Email address</label>
-                            <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required autofocus>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" required autofocus>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword">Password</label>
                             <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
                         </div>
                         <div class="form-group">
