@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="gulungtikar"/>
+  <table-filter match-name="toko"/>
+  <table-filter match-name="orderentry"/>
+  <table-filter match-name="wishlist"/>
+  <table-filter match-name="shoppingcart"/>
+  <table-filter match-name="kategori"/>
+  <table-filter match-name="pengguna"/>
+  <table-filter match-name="barang"/>
+  <table-filter match-name="kategoribarang"/>
+  <table-filter match-name="wishlistentry"/>
+  <table-filter match-name="etalase"/>
+  <table-filter match-name="shoppingcartentry"/>
+  <table-filter match-name="transaksi"/>
+</hibernate-reverse-engineering>

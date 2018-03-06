@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gulungtikar?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="model/Orderentry.hbm.xml"/>
+    <mapping resource="model/Shoppingcart.hbm.xml"/>
+    <mapping resource="model/Transaksi.hbm.xml"/>
+    <mapping resource="model/Barang.hbm.xml"/>
+    <mapping resource="model/Etalase.hbm.xml"/>
+    <mapping resource="model/Wishlistentry.hbm.xml"/>
+    <mapping resource="model/Shoppingcartentry.hbm.xml"/>
+    <mapping resource="model/Toko.hbm.xml"/>
+    <mapping resource="model/Kategori.hbm.xml"/>
+    <mapping resource="model/Pengguna.hbm.xml"/>
+    <mapping resource="model/Wishlist.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

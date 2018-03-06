@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 28, 2018 5:28:49 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Transaksi" table="transaksi" catalog="gulungtikar" optimistic-lock="version">
+        <id name="idTransaksi" type="java.lang.Integer">
+            <column name="ID_transaksi" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="pengguna" class="model.Pengguna" fetch="select">
+            <column name="ID_pengguna" not-null="true" />
+        </many-to-one>
+        <property name="tanggal" type="timestamp">
+            <column name="tanggal" length="19" not-null="true" />
+        </property>
+        <property name="catatan" type="string">
+            <column name="catatan" not-null="true" />
+        </property>
+        <property name="kurir" type="string">
+            <column name="kurir" not-null="true" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" not-null="true" />
+        </property>
+        <property name="alamatPengiriman" type="string">
+            <column name="alamat_pengiriman" not-null="true" />
+        </property>
+        <set name="orderentries" table="orderentry" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_transaksi" not-null="true" />
+            </key>
+            <one-to-many class="model.Orderentry" />
+        </set>
+    </class>
+</hibernate-mapping>

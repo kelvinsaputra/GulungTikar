@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 28, 2018 5:28:49 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Shoppingcartentry" table="shoppingcartentry" catalog="gulungtikar" optimistic-lock="version">
+        <composite-id name="id" class="model.ShoppingcartentryId">
+            <key-property name="idShoppingcart" type="int">
+                <column name="ID_shoppingcart" />
+            </key-property>
+            <key-property name="idBarang" type="int">
+                <column name="ID_barang" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="barang" class="model.Barang" update="false" insert="false" fetch="select">
+            <column name="ID_barang" not-null="true" />
+        </many-to-one>
+        <many-to-one name="shoppingcart" class="model.Shoppingcart" update="false" insert="false" fetch="select">
+            <column name="ID_shoppingcart" not-null="true" />
+        </many-to-one>
+        <property name="qty" type="int">
+            <column name="qty" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
