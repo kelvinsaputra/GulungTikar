@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="js/bootstrap.min.js"></script>
-        
+
         <!-- Custom styles for this template -->
         <link type="text/css" href="css/shop-homepage.css" rel="stylesheet">
     </head>
@@ -36,46 +36,41 @@
             <div class="row">
                 <div class="col-md-4">
                     <form action="" method="post" enctype="multipart/form-data">
-                    <img alt="User picture" src="css/Bikesgray.jpg" class="img-fluid rounded"/>    
+                        <img alt="User picture" src="css/Bikesgray.jpg" class="img-fluid rounded"/>    
                         <div class="form-group">
                             <input type="file" name="file" id="file" required>
                         </div>
                         <button class="btn btn-primary" id="upload-button" type="submit">Upload image</button>
                     </form>
                 </div>
+
                 <div class="col-6 mx-auto">
-                    <form action="" method="post">
-                        <fieldset disabled>
+                    <div class="col-12">
+                        <h2>Your Profile</h2>
+                        Email
+                        Rekening
+                        Saldo
+                    </div>
+                    <hr>
+                    <div class="col-12">
+                        <h2>Edit Your Profile</h2>
+                        <form action="" method="post">
                             <div class="form-group">
-                                <label for="editEmail">Email</label>
-                                <input type="email" class="form-control" id="editEmail" placeholder="name@example.com">
-                            </div>
-                        </fieldset>
-                        <div class="form-group">
-                                <label for="editPassword">Password</label>
-                                <input type="password" class="form-control" id="editPassword" placeholder="fill to change">
-                            </div>
-                        <div class="form-group">
-                            <label for="editName">Name</label>
-                            <input type="text" class="form-control" id="editName" placeholder="Bakphia Pathok">
-                        </div>
-                        <div class="form-group">
-                            <label for="editAddress">Address</label>
-                            <input type="text" class="form-control" id="editAddress" placeholder="Dipati ukur 80-84">
-                        </div>
-                        <fieldset disabled>
-                            <div class="form-group">
-                                <label for="editName">No Rekening</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="0123456789">
+                                <input type="password" class="form-control" id="editPassword" placeholder="New Password">
                             </div>
                             <div class="form-group">
-                                <label for="editName">Saldo</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="0">
+                                <input type="password" class="form-control" id="editPasswordRetype" placeholder="Retype New Password">
                             </div>
-                        </fieldset>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editName" placeholder="New Display Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editAddress" placeholder="New Address">
+                            </div>
                             <button class="btn btn-danger">Cancel</button>
                             <button class="btn btn-success">Save</button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

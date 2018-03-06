@@ -26,10 +26,10 @@
             <div>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.jsp">Log in</a>
+                        <a class="nav-link text-white" href="login.jsp">Log in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.jsp">Sign up</a>
+                        <a class="nav-link text-white" href="register.jsp">Sign up</a>
                     </li>
                 </ul>
             </div>

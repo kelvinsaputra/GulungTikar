@@ -37,24 +37,19 @@
                     <h3 class="h5 mb-3 font-weight-normal">Fill in the form below to get instant access:</h3>
                     <form action="registerServlet" method="post">
                         <div class="form-group">
-                            <label for="inputName">Your Name</label>
-                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Bakphia Pathok" required>
+                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="inputAddress">Address</label>
-                            <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Dipati Ukur 80-84" required>
+                            <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address" required>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail">Email address</label>
-                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="name@example.com" required autofocus>
+                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address" required autofocus>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword">Password</label>
                             <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
                         </div>
                         <div class="form-group">
-                            <label for="inputRekening">Nomor Rekening</label>
-                            <input type="text" name="norekening" class="form-control" id="inputPassword" placeholder="123992345" required>
+                            <input type="text" name="norekening" class="form-control" id="inputPassword" placeholder="Account Number" required>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="type" id="type" value="Pembeli">
