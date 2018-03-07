@@ -89,7 +89,6 @@ public class loginServlet extends HttpServlet {
         {
             Session session = new Session();
             session.setPengguna(pengguna);
-            int id = pengguna.getIdPengguna();
             response.sendRedirect("userprofile.jsp");
         }
         else
