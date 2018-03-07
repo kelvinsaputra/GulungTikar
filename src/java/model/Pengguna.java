@@ -1,5 +1,5 @@
 package model;
-// Generated Feb 28, 2018 5:28:46 PM by Hibernate Tools 4.3.1
+// Generated Mar 7, 2018 11:31:33 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -17,7 +17,7 @@ public class Pengguna  implements java.io.Serializable {
      private String nama;
      private String alamatRumah;
      private String type;
-     private int noRekening;
+     private String noRekening;
      private int saldo;
      private Set<Toko> tokos = new HashSet<Toko>(0);
      private Set<Shoppingcart> shoppingcarts = new HashSet<Shoppingcart>(0);
@@ -28,7 +28,7 @@ public class Pengguna  implements java.io.Serializable {
     }
 
 	
-    public Pengguna(String password, String email, String nama, String alamatRumah, String type, int noRekening, int saldo) {
+    public Pengguna(String password, String email, String nama, String alamatRumah, String type, String noRekening, int saldo) {
         this.password = password;
         this.email = email;
         this.nama = nama;
@@ -37,7 +37,7 @@ public class Pengguna  implements java.io.Serializable {
         this.noRekening = noRekening;
         this.saldo = saldo;
     }
-    public Pengguna(String password, String email, String nama, String alamatRumah, String type, int noRekening, int saldo, Set<Toko> tokos, Set<Shoppingcart> shoppingcarts, Set<Transaksi> transaksis, Set<Wishlist> wishlists) {
+    public Pengguna(String password, String email, String nama, String alamatRumah, String type, String noRekening, int saldo, Set<Toko> tokos, Set<Shoppingcart> shoppingcarts, Set<Transaksi> transaksis, Set<Wishlist> wishlists) {
        this.password = password;
        this.email = email;
        this.nama = nama;
@@ -93,11 +93,11 @@ public class Pengguna  implements java.io.Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    public int getNoRekening() {
+    public String getNoRekening() {
         return this.noRekening;
     }
     
-    public void setNoRekening(int noRekening) {
+    public void setNoRekening(String noRekening) {
         this.noRekening = noRekening;
     }
     public int getSaldo() {

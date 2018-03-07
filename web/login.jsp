@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -28,18 +28,18 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
-
+       
         <!-- Page Content -->
         <div class="container">
             <div class="row">
                 <div class="col-10 mx-auto" style="padding: 12%;">
                     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-                    <form action="" method="post">
+                    <form action="loginServlet" method="post">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" required autofocus>
+                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address" required autofocus>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">Login</button>

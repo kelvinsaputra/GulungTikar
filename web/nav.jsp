@@ -4,6 +4,8 @@
     Author     : fsury
 --%>
 
+<%@page import="model.Pengguna"%>
+<%@page import="model.Session"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <div class="mr-auto">
@@ -25,12 +27,27 @@
 
             <div>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="login.jsp">Log in</a>
-                    </li>
+                    <%
+                        Session current = new Session();
+                        System.out.print("=========================================="+ Session.getInstance());
+                        System.out.print("=========================================="+ current.getPengguna());
+                       
+                        if(current.getPengguna()==null){
+                    %>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="register.jsp">Sign up</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="login.jsp">Log in</a>
+                    </li>
+                    <%} else {%>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="userprofile.jsp">My profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="logoutServlet">Logout</a>
+                    </li>
+                    <%}%>
                 </ul>
             </div>
         </div>
