@@ -4,6 +4,7 @@
     Author     : fsury
 --%>
 
+<%@page import="model.Session"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,9 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
-
+<%
+    System.out.print(Session.getInstance());
+%>
         <!-- Page Content -->
         <div class="container">
 
