@@ -5,10 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.*"%>
+<%@page import="controller.*"%>
+<%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -30,7 +34,11 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
-
+         <%
+            
+            SystemDA SDA = new SystemDA();
+            ArrayList<Pengguna> pengguna = SDA.getUserByID(Integer.parseInt(request.getParameter("id")));
+        %>
         <!-- Page Content -->
         <div class="container" style="padding-top: 5%">
             <div class="row">
@@ -46,7 +54,7 @@
 
                 <div class="col-6 mx-auto">
                     <div class="col-12">
-                        <h2>Your Profile</h2>
+                        <h2>Your Profile <%= pengguna.get(0).getNama()%></h2>
                         Email
                         Rekening
                         Saldo

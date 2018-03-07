@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Feb 28, 2018 5:28:49 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 7, 2018 11:31:34 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Barang" table="barang" catalog="gulungtikar" optimistic-lock="version">
         <id name="idBarang" type="java.lang.Integer">
@@ -11,7 +11,7 @@
         <property name="namaBarang" type="string">
             <column name="nama_barang" not-null="true" />
         </property>
-        <property name="hargaBarang" type="string">
+        <property name="hargaBarang" type="int">
             <column name="harga_barang" not-null="true" />
         </property>
         <set name="wishlistentries" table="wishlistentry" inverse="true" lazy="true" fetch="select">
@@ -32,7 +32,7 @@
             </key>
             <one-to-many class="model.Shoppingcartentry" />
         </set>
-        <set name="kategoris" table="kategoribarang" inverse="true" lazy="true" fetch="select">
+        <set name="kategoris" table="kategoribarang" inverse="false" lazy="true" fetch="select" cascade="all">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
