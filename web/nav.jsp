@@ -4,6 +4,12 @@
     Author     : fsury
 --%>
 
+<%@page import="model.Session"%>
+<%@page import="model.Pengguna"%>
+<%@page import="model.Toko"%>
+<%@page import="controller.*"%>
+<%@page import="java.util.ArrayList"%>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <div class="mr-auto">
@@ -25,12 +31,55 @@
 
             <div>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="login.jsp">Log in</a>
-                    </li>
+                    <%
+                        Session current = new Session();
+                        System.out.print("=========================================="+ Session.getInstance());
+                        System.out.print("=========================================="+ current.getPengguna());
+                       
+                        if(current.getPengguna()==null){
+                    %>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="register.jsp">Sign up</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="login.jsp">Log in</a>
+                    </li>
+                    <%} else {%>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="userprofile.jsp">My profile</a>
+                    </li>
+                    <%
+                        
+                        ArrayList<Toko> toko = new ArrayList<Toko>();
+                        SystemDA da = new SystemDA();
+                        toko = da.getAllToko();
+                        boolean ketemu=false;
+
+                        for(int i=0; i<toko.size();i++){
+                            if(toko.get(i).getPengguna().getIdPengguna()==current.getPengguna().getIdPengguna()){
+                                ketemu = true; //cek semua toko ada yg dipunyain sama yg lagi login ga, kalo ada oke, kalo belom buttonnya buka Toko!
+                            }
+                        }
+
+                        if(ketemu){
+                    %>        
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="profiletoko.jsp">Cek Toko!</a>
+                    </li>  
+                    <%   
+                        } else {
+                    %>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="toko.jsp">Buka Toko!</a>
+                    </li>
+                    <%
+                    }
+
+                    %>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="logoutServlet">Logout</a>
+                    </li>
+                    <%}%>
                 </ul>
             </div>
         </div>

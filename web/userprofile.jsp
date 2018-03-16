@@ -4,7 +4,12 @@
     Author     : LENOVO
 --%>
 
+<%@page import="model.Session"%>
+<%@page import="model.Pengguna"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="controller.*"%>
+<%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,7 +35,13 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
+        <%
+            Session current = new Session();
+            System.out.print(current.getPengguna().getNama());
+//            SystemDA SDA = new SystemDA();
+//            ArrayList<Pengguna> pengguna = SDA.getUserByID(Integer.parseInt(request.getParameter("id")));
 
+        %>
         <!-- Page Content -->
         <div class="container" style="padding-top: 5%">
             <div class="row">
@@ -46,7 +57,7 @@
 
                 <div class="col-6 mx-auto">
                     <div class="col-12">
-                        <h2>Your Profile</h2>
+                        <h2>Welcome <%=current.getPengguna().getNama()%> </h2>
                         Email
                         Rekening
                         Saldo

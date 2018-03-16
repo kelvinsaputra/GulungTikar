@@ -5,25 +5,24 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Pengguna;
+import javax.servlet.http.HttpSession;
+import model.Toko;
 
 /**
  *
- * @author Ryou
+ * @author user
  */
-@WebServlet(name = "registerServlet", urlPatterns = {"/registerServlet"})
-public class registerServlet extends HttpServlet {
+@WebServlet(name = "editToko", urlPatterns = {"/editToko"})
+public class editToko extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class registerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");            
+            out.println("<title>Servlet editToko</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet editToko at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,21 +76,34 @@ public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA SDA = new SystemDA();
-        Pengguna temp = new Pengguna();
-        temp.setNama(request.getParameter("name"));
-        temp.setType(request.getParameter("type"));
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        temp.setAlamatRumah(request.getParameter("address"));
-        temp.setNoRekening(Integer.parseInt(request.getParameter("norekening")));
-        temp.setSaldo(0);
-        PenggunaDA da = new PenggunaDA();
-        da.register(temp);
-        response.sendRedirect("index.jsp");
+//        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        int idPengguna = (Integer) session.getAttribute("idPengguna");
+
+        SystemDA da = new SystemDA();
+
+        ArrayList<Toko> temp = new ArrayList<Toko>();
+        Toko toko = new Toko();
+
+        temp = da.getAllToko();
+
+        for (int i = 0; i < temp.size(); i++) {
+            if (temp.get(i).getPengguna().getIdPengguna() == idPengguna) {
+                toko = temp.get(i);
+            }
+        }
+
+        boolean newStatus = false;
+
+        if (Integer.parseInt(request.getParameter("status")) == 1) {
+            newStatus = true;
+        }
+
+        toko.setAlamatToko(request.getParameter("alamat"));
+        toko.setStatus(newStatus);
+
+        response.sendRedirect("nav.jsp");
     }
-    
-    
 
     /**
      * Returns a short description of the servlet.

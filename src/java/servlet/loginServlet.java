@@ -6,24 +6,24 @@
 package servlet;
 
 import controller.PenggunaDA;
+//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Pengguna;
+import model.Session;
 
 /**
  *
  * @author Ryou
  */
-@WebServlet(name = "registerServlet", urlPatterns = {"/registerServlet"})
-public class registerServlet extends HttpServlet {
+@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
+public class loginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +42,10 @@ public class registerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");            
+            out.println("<title>Servlet loginServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,21 +77,25 @@ public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA SDA = new SystemDA();
         Pengguna temp = new Pengguna();
-        temp.setNama(request.getParameter("name"));
-        temp.setType(request.getParameter("type"));
+        Pengguna pengguna = new Pengguna();
+        SystemDA SDA = new SystemDA();
+        PenggunaDA PDA = new PenggunaDA();
+        Boolean login=false;
         temp.setEmail(request.getParameter("email"));
         temp.setPassword(SDA.MD5(request.getParameter("password")));
-        temp.setAlamatRumah(request.getParameter("address"));
-        temp.setNoRekening(Integer.parseInt(request.getParameter("norekening")));
-        temp.setSaldo(0);
-        PenggunaDA da = new PenggunaDA();
-        da.register(temp);
-        response.sendRedirect("index.jsp");
+        pengguna = PDA.login(temp);
+        if(pengguna!=null)
+        {
+            Session session = new Session();
+            session.setPengguna(pengguna);
+            response.sendRedirect("userprofile.jsp");
+        }
+        else
+        {
+            response.sendRedirect("index.jsp");
+        }
     }
-    
-    
 
     /**
      * Returns a short description of the servlet.

@@ -5,25 +5,26 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Pengguna;
+import model.Session;
+import model.Toko;
 
 /**
  *
- * @author Ryou
+ * @author user
  */
-@WebServlet(name = "registerServlet", urlPatterns = {"/registerServlet"})
-public class registerServlet extends HttpServlet {
+@WebServlet(name = "bukaToko", urlPatterns = {"/bukaToko"})
+public class bukaToko extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +43,10 @@ public class registerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");            
+            out.println("<title>Servlet bukaToko</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet bukaToko at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,6 +54,7 @@ public class registerServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
+     *
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -77,21 +79,33 @@ public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA SDA = new SystemDA();
-        Pengguna temp = new Pengguna();
-        temp.setNama(request.getParameter("name"));
-        temp.setType(request.getParameter("type"));
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        temp.setAlamatRumah(request.getParameter("address"));
-        temp.setNoRekening(Integer.parseInt(request.getParameter("norekening")));
-        temp.setSaldo(0);
-        PenggunaDA da = new PenggunaDA();
-        da.register(temp);
-        response.sendRedirect("index.jsp");
+//        processRequest(request, response);
+//        HttpSession session = request.getSession(false);
+//        int idPengguna = (Integer) session.getAttribute("idPengguna");
+        Session current = new Session();
+        
+        int idPengguna=current.getPengguna().getIdPengguna();
+        SystemDA da = new SystemDA();
+        Toko newToko = new Toko();
+        Pengguna tempuser = new Pengguna();
+        ArrayList<Pengguna> user = new ArrayList<Pengguna>();
+        
+        user = da.getAllUser();
+        
+        for(int i=0;i<user.size();i++){
+            if(user.get(i).getIdPengguna()==idPengguna){
+                tempuser=user.get(i);
+            }
+        }
+        
+        newToko.setAlamatToko(request.getParameter("alamat"));
+        newToko.setPengguna(tempuser);
+        newToko.setStatus(true);
+
+        da.insertToko(newToko);
+        
+        response.sendRedirect("userprofile.jsp");
     }
-    
-    
 
     /**
      * Returns a short description of the servlet.
