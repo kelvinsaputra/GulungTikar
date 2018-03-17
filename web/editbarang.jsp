@@ -45,9 +45,9 @@
             Nama  : <input type="text" name="nama" value="<%=namaLama%>">
             Harga : <input type="text" name="harga" value="<%=harga%>">
             <!-- kurang tambahin edit ketersediaan di etalase
-            <button type="submit" method="post"> 
+            <!---->            <button type="submit" method="post"> edit </button> 
         </form>
-        
+
         <%} else {
         %> <h1> error input idBarang</h1><%
         }
