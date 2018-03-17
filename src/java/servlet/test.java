@@ -5,17 +5,13 @@
  */
 package servlet;
 
-import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Session;
-import model.Toko;
 
 /**
  *
@@ -83,7 +79,7 @@ public class test extends HttpServlet {
             ArrayList<Toko> toko = new ArrayList<Toko>();
             Toko temp = new Toko();
             toko = da.getAllToko();
-            for(int i=0;i<toko.size();i++){
+            for(int i=0;i<toko.size();i++{
                 if(toko.get(i).getPengguna().getIdPengguna()==current.getPengguna().getIdPengguna()){
                     temp = toko.get(i);
                 }

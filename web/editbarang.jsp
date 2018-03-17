@@ -16,11 +16,13 @@
     </head>
     <body>
         <%
-            int idBarang = Integer.parseInt(request.getParameter("idBarang"));
+            int idBarang=-1;
+            idBarang = Integer.parseInt(request.getParameter("idBarang"));
+
             SystemDA da = new SystemDA();
-            ArrayList<Barang> temp = ArrayList<Barang>();
+            ArrayList<Barang> temp = new ArrayList<Barang>();
             temp = da.getAllBarang();
-            String namaLama,harga;
+            String namaLama=null,harga=null;
             
             for(int i=0 ;i<temp.size();i++){
                 if(temp.get(i).getIdBarang()==idBarang){
@@ -29,15 +31,27 @@
                 }
             }
             
-            String gagal = request.getParameter("gagal");
-                                if (gagal != null) {
-                                    out.println("Edit gagal! Pastikan semua field terisi!");
-                                }
+//            String gagal = request.getParameter("gagal");
+//                                if (gagal != null) {
+//                                    out.println("Edit gagal! Pastikan semua field terisi!");
+//                                }
+
+            if(idBarang!=-1 && namaLama!=null && harga!=null){
+                
+            
         %>
         <h1>Edit barang!</h1>
         <form action="editbarangServlet?idBarang=<%=idBarang%>" method="post">
-            Nama  : <input type="text" name="nama" placeholder="<%=namaLama%>">
-            Harga : <input type="text" name="harga" placeholder="<%=harga%>">
+            Nama  : <input type="text" name="nama" value="<%=namaLama%>">
+            Harga : <input type="text" name="harga" value="<%=harga%>">
+            <!-- kurang tambahin edit ketersediaan di etalase
+            <button type="submit" method="post"> 
         </form>
+        
+        <%} else {
+        %> <h1> error input idBarang</h1><%
+        }
+        
+        %>
     </body>
 </html>

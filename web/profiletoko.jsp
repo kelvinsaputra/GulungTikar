@@ -14,12 +14,13 @@
 <!DOCTYPE html>
 
 <%
-            Session current = new Session();
            
+            String username = (String) request.getSession(false).getAttribute("username");
+            int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
             SystemDA da = new SystemDA();
             ArrayList<Toko> toko = new ArrayList<Toko>();
             Toko temp = new Toko();
-            if(current.getPengguna()!=null){
+            if(username!=null){
                 toko = da.getAllToko();
             }
             
@@ -27,7 +28,7 @@
                 
             
             for(int i=0;i<toko.size();i++){
-                if(toko.get(i).getPengguna().getIdPengguna()==current.getPengguna().getIdPengguna()){
+                if(toko.get(i).getPengguna().getIdPengguna()==idPengguna){
                     temp = toko.get(i);
                 }
             }
@@ -39,14 +40,30 @@
         <title>JSP Page</title>
     </head>
     <body>
+                <jsp:include page="nav.jsp"/>
         <h1>Profile Toko</h1>
 
-        <h3>Alamat toko: <%= temp.getAlamatToko()%></h3>
-        <h3>Status toko: <%= temp.isStatus()%></h3>
-        <!--<form action="editToko.jsp?idToko=<%=temp.getIdToko()%>" method="post">
+        <form action="editToko?idToko=<%=temp.getIdToko()%>" method="post">
+            <h3>Alamat toko: <input type="text" name="alamat" value="<%= temp.getAlamatToko()%>" > </h3>
+            <h3>Status toko: <input type="text" name="status" value="<%= temp.isStatus()%>" ></h3>
             <button type="submit"> Edit Toko </button>
-        </form>-->
+        </form>
+
         <h1>ETALASE TOKO HEHE</h1>
+        <%
+            String gagalEdit = request.getParameter("statusEdit");
+            if(gagalEdit!=null){
+                if(gagalEdit.equals("0")){
+        %>
+        <h3> gagal edit barang! </h3>
+        <%
+                } else {
+        %>
+        <h3> berhasil edit barang! </h3>
+        <%
+}
+}
+        %>
         <form action="tambahbarang.jsp?idToko=<%=temp.getIdToko()%>" method="post">
             <button type="submit"> Tambah barang </button>
         </form>

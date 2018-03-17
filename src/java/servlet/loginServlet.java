@@ -10,11 +10,13 @@ import controller.PenggunaDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Pengguna;
 import model.Session;
 
@@ -87,14 +89,18 @@ public class loginServlet extends HttpServlet {
         pengguna = PDA.login(temp);
         if(pengguna!=null)
         {
-            Session session = new Session();
-            session.setPengguna(pengguna);
-            response.sendRedirect("userprofile.jsp");
-        }
-        else
-        {
-            response.sendRedirect("index.jsp");
-        }
+           HttpSession session = request.getSession();
+                session.setAttribute("username", pengguna.getNama());
+                session.setAttribute("idPengguna", pengguna.getIdPengguna());
+                session.setAttribute("statusLogin", "1");
+                RequestDispatcher rd
+                        = request.getRequestDispatcher("userprofile.jsp");
+                rd.forward(request, response);
+            } else {
+                RequestDispatcher rd
+                        = request.getRequestDispatcher("nav.jsp");
+                rd.forward(request, response);
+            }
     }
 
     /**

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class registerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");            
+            out.println("<title>Servlet registerServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>");
@@ -88,10 +89,10 @@ public class registerServlet extends HttpServlet {
         temp.setSaldo(0);
         PenggunaDA da = new PenggunaDA();
         da.register(temp);
-        response.sendRedirect("index.jsp");
+        RequestDispatcher rd
+                = request.getRequestDispatcher("index.jsp");
+        rd.forward(request, response);
     }
-    
-    
 
     /**
      * Returns a short description of the servlet.

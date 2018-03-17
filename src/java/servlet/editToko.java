@@ -9,6 +9,7 @@ import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,32 +78,19 @@ public class editToko extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        HttpSession session = request.getSession(false);
-        int idPengguna = (Integer) session.getAttribute("idPengguna");
 
         SystemDA da = new SystemDA();
+        int newStatus = 0;
 
-        ArrayList<Toko> temp = new ArrayList<Toko>();
-        Toko toko = new Toko();
-
-        temp = da.getAllToko();
-
-        for (int i = 0; i < temp.size(); i++) {
-            if (temp.get(i).getPengguna().getIdPengguna() == idPengguna) {
-                toko = temp.get(i);
-            }
+        if (request.getParameter("status").equals("true")) {
+            newStatus = 1;
         }
 
-        boolean newStatus = false;
+        da.updateToko(Integer.parseInt(request.getParameter("idToko")), newStatus, request.getParameter("alamat"));
 
-        if (Integer.parseInt(request.getParameter("status")) == 1) {
-            newStatus = true;
-        }
-
-        toko.setAlamatToko(request.getParameter("alamat"));
-        toko.setStatus(newStatus);
-
-        response.sendRedirect("nav.jsp");
+        RequestDispatcher rd
+                = request.getRequestDispatcher("profiletoko.jsp");
+        rd.forward(request, response);
     }
 
     /**

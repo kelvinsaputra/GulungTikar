@@ -14,7 +14,7 @@
     <body>
         <h1>Button buka toko!</h1>
         <form action="bukaToko" method="post">
-            <input type="text" name="alamat">
+            Alamat Toko : <input type="text" name="alamat">
             <button type="submit"> buka Toko! </button>
         </form>
     </body>

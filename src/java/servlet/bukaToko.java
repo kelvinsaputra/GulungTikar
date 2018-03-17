@@ -9,6 +9,7 @@ import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -82,29 +83,31 @@ public class bukaToko extends HttpServlet {
 //        processRequest(request, response);
 //        HttpSession session = request.getSession(false);
 //        int idPengguna = (Integer) session.getAttribute("idPengguna");
-        Session current = new Session();
-        
-        int idPengguna=current.getPengguna().getIdPengguna();
+
+        int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+
         SystemDA da = new SystemDA();
         Toko newToko = new Toko();
         Pengguna tempuser = new Pengguna();
         ArrayList<Pengguna> user = new ArrayList<Pengguna>();
-        
+
         user = da.getAllUser();
-        
-        for(int i=0;i<user.size();i++){
-            if(user.get(i).getIdPengguna()==idPengguna){
-                tempuser=user.get(i);
+
+        for (int i = 0; i < user.size(); i++) {
+            if (user.get(i).getIdPengguna() == idPengguna) {
+                tempuser = user.get(i);
             }
         }
-        
+
         newToko.setAlamatToko(request.getParameter("alamat"));
         newToko.setPengguna(tempuser);
         newToko.setStatus(true);
 
         da.insertToko(newToko);
-        
-        response.sendRedirect("userprofile.jsp");
+
+        RequestDispatcher rd
+                = request.getRequestDispatcher("userprofile.jsp");
+        rd.forward(request, response);
     }
 
     /**

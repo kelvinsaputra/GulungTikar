@@ -178,9 +178,9 @@ public class SystemDA {
 //        hasil = (ArrayList<Etalase>) q.list();
 //        return hasil;
 //    }
-    public void deleteEtalase(int idBarang, int idPengguna) {
+    public void deleteEtalase(int idBarang, int idToko) {
         s.beginTransaction();
-        Query query = s.createQuery("delete from Etalase where id_barang=" + idBarang + " and id_toko in (select id_toko from toko where id_pengguna =" + idPengguna + ")"); //disini many to many jd deletenya di etalase pengguna siapa jg harus dicek
+        Query query = s.createQuery("delete from Etalase where id_barang=" + idBarang + " and id_toko =" + idToko); //disini many to many jd deletenya di etalase pengguna siapa jg harus dicek
         int exec = query.executeUpdate();
         s.getTransaction().commit();
     }
@@ -323,9 +323,9 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public void updateToko(int idPengguna, String stat, String alamat) {
+    public void updateToko(int idToko, int stat, String alamat) {
         s.beginTransaction();
-        Query query = s.createQuery("update Toko set status = '" + stat + "', alamat='" + alamat + "' where id_barang=" + idPengguna); //relasi 1 ke 1 tinggal simple gaperlu select in soalnya lgsg nyambung
+        Query query = s.createQuery("update Toko set status = " + stat + ", alamat_toko='" + alamat + "' where id_toko=" + idToko); //relasi 1 ke 1 tinggal simple gaperlu select in soalnya lgsg nyambung
         int exec = query.executeUpdate();
         s.getTransaction().commit();
     }

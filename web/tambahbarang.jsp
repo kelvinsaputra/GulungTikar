@@ -18,9 +18,9 @@
     <body>
         
         <form action="tambahbarangServlet?idToko=<%=Integer.parseInt(request.getParameter("idToko"))%>" method="post">
-            <input type="text" name="namabarang">
-            <input type="text" name="hargabarang">
-            <input type="text" name="kategoribarang">
+            Nama Barang : <input type="text" name="namabarang">
+            Harga Barang : <input type="text" name="hargabarang">
+            
             <%
                 SystemDA da = new SystemDA();
                 ArrayList<Kategori> kategori= new ArrayList<Kategori>();
@@ -29,7 +29,7 @@
                 if(kategori!=null){
                     for(int i=0;i<kategori.size();i++){
             %>
-            <input type="radio" name="type" value="<%=kategori.get(i).getIdKategori()%>"> <%=kategori.get(i).getNamaKategori()%>
+            Pilih kategori : <input type="radio" name="type" value="<%=kategori.get(i).getIdKategori()%>"> <%=kategori.get(i).getNamaKategori()%>
             <%
                     }                    
                 }

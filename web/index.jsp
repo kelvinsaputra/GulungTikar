@@ -31,7 +31,7 @@
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
 <%
-    System.out.print(Session.getInstance());
+    System.out.print((String) request.getSession(false).getAttribute("username"));
 %>
         <!-- Page Content -->
         <div class="container">

@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -83,59 +84,58 @@ public class tambahbarangServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //        processRequest(request, response);
-        Session current = new Session();
+
         SystemDA da = new SystemDA();
         Barang temp = new Barang();
-        
+
         HashSet<Kategori> kategoris = new HashSet();
         ArrayList<Kategori> kategori = new ArrayList<Kategori>();
         kategori = da.getAllKategori();
-        
+
 //        System.out.println(request.getParameter("type"));
-        
         for (int i = 0; i < kategori.size(); i++) {
-            if (kategori.get(i).getIdKategori()==Integer.parseInt(request.getParameter("type"))) {
+            if (kategori.get(i).getIdKategori() == Integer.parseInt(request.getParameter("type"))) {
                 kategoris.add(kategori.get(i));
             }
         }
-        
+
         //cari id buat di masukin ke etalase , id kita tentuin dari id terakhir +1 (jadi ga auto increment soalnya bs gatau idnya)
 //        ArrayList<Barang> tempbarang = new ArrayList<Barang>();
 //        tempbarang = da.getAllBarang();
-        
 //        int lastID = tempbarang.get(tempbarang.size()-1).getIdBarang();
 //        System.out.println(lastID);
 //        lastID++;
-        
 //        temp.setIdBarang(lastID);
         temp.setNamaBarang(request.getParameter("namabarang"));
         temp.setHargaBarang(request.getParameter("hargabarang"));
         temp.setKategoris(kategoris);
-        
+
         EtalaseId idetalase = new EtalaseId();
         idetalase.setIdBarang(da.insertBarang(temp));
         idetalase.setIdToko(Integer.parseInt(request.getParameter("idToko")));
-        
+
         ArrayList<Toko> toko = new ArrayList<Toko>();
         Toko temptoko = new Toko();
-        
-        for(int i=0;i<toko.size();i++){
-            if(toko.get(i).getIdToko()==Integer.parseInt(request.getParameter("idToko"))){
-                temptoko=toko.get(i);
+
+        for (int i = 0; i < toko.size(); i++) {
+            if (toko.get(i).getIdToko() == Integer.parseInt(request.getParameter("idToko"))) {
+                temptoko = toko.get(i);
             }
         }
-        
+
         Etalase etalase = new Etalase();
         etalase.setKetersediaan(true);
-        etalase.setToko(temptoko);
+//        etalase.setToko(temptoko);
         etalase.setId(idetalase);
-        etalase.setBarang(temp);
+//        etalase.setBarang(temp);
 //  
 //        
         da.insertEtalase(etalase);
 //        
-        
-        response.sendRedirect("profiletoko.jsp");
+
+        RequestDispatcher rd
+                = request.getRequestDispatcher("profiletoko.jsp");
+        rd.forward(request, response);
 
     }
 

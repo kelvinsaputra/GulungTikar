@@ -23,7 +23,8 @@ import model.Session;
 public class logoutServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -49,8 +50,14 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        new Session().purge();
-        response.sendRedirect("index.jsp");
+//        request.getSession(false).removeAttribute("username");
+//        request.getSession(false).removeAttribute("idPengguna");
+//        request.getSession(false).removeAttribute("statusLogin");
+
+        request.getSession(false).invalidate();
+        RequestDispatcher rd
+                = request.getRequestDispatcher("nav.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -64,7 +71,8 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        
     }
 
     /**

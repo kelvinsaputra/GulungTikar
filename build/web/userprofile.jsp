@@ -36,8 +36,7 @@
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
         <%
-            Session current = new Session();
-            System.out.print(current.getPengguna().getNama());
+            System.out.print((String) request.getSession(false).getAttribute("username"));
 //            SystemDA SDA = new SystemDA();
 //            ArrayList<Pengguna> pengguna = SDA.getUserByID(Integer.parseInt(request.getParameter("id")));
 
@@ -57,10 +56,23 @@
 
                 <div class="col-6 mx-auto">
                     <div class="col-12">
-                        <h2>Welcome <%=current.getPengguna().getNama()%> </h2>
-                        Email
-                        Rekening
-                        Saldo
+                        <h2>Welcome <%=(String) request.getSession(false).getAttribute("username")%> </h2>
+                        <%
+                            SystemDA da = new SystemDA();
+                            ArrayList<Pengguna> temppengguna = new ArrayList<Pengguna>();
+                            temppengguna = da.getAllUser();
+                            Pengguna temp = new Pengguna();
+                            for(int i=0;i<temppengguna.size();i++){
+                                if(temppengguna.get(i).getIdPengguna()==(Integer)request.getSession(false).getAttribute("idPengguna")){
+                                    temp=temppengguna.get(i);
+                                }
+                            }
+
+
+                        %>
+                        Email : <%=temp.getEmail()%>
+                        Rekening : <%=temp.getNoRekening()%>
+                        Saldo : <%=temp.getSaldo()%>
                     </div>
                     <hr>
                     <div class="col-12">

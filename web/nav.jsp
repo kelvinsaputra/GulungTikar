@@ -32,11 +32,23 @@
             <div>
                 <ul class="navbar-nav ml-auto">
                     <%
-                        Session current = new Session();
-                        System.out.print("=========================================="+ Session.getInstance());
-                        System.out.print("=========================================="+ current.getPengguna());
+                        String statusLogin = (String) request.getSession(false).getAttribute("statusLogin");
+                        String username=null;
+                        int idPengguna=-1;
+                        if(statusLogin!=null){
+                            if(statusLogin.equals("1")){ //kalo ada yg login
+                            username = (String) request.getSession(false).getAttribute("username");
+                            idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+                            }
+                        }
+                        
+                        if(username!=null && idPengguna!=-1){
+                            System.out.print("=========================================="+ username);
+                             System.out.print("=========================================="+ idPengguna);
                        
-                        if(current.getPengguna()==null){
+                        }
+                        
+                        if(username==null && idPengguna==-1){
                     %>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="register.jsp">Sign up</a>
@@ -56,7 +68,7 @@
                         boolean ketemu=false;
 
                         for(int i=0; i<toko.size();i++){
-                            if(toko.get(i).getPengguna().getIdPengguna()==current.getPengguna().getIdPengguna()){
+                            if(toko.get(i).getPengguna().getIdPengguna()==idPengguna){
                                 ketemu = true; //cek semua toko ada yg dipunyain sama yg lagi login ga, kalo ada oke, kalo belom buttonnya buka Toko!
                             }
                         }

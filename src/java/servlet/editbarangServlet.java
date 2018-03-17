@@ -8,6 +8,7 @@ package servlet;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +39,7 @@ public class editbarangServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet editbarangServlet</title>");            
+            out.println("<title>Servlet editbarangServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet editbarangServlet at " + request.getContextPath() + "</h1>");
@@ -74,15 +75,18 @@ public class editbarangServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        
+
         SystemDA da = new SystemDA();
-        
-        
-        if(request.getParameter("idBarang").isEmpty() || request.getParameter("harga").isEmpty() || request.getParameter("nama").isEmpty()){
-            response.sendRedirect("profiletoko.jsp?statusEdit=0");
+
+        if (request.getParameter("idBarang").isEmpty() || request.getParameter("harga").isEmpty() || request.getParameter("nama").isEmpty()) {
+            RequestDispatcher rd
+                    = request.getRequestDispatcher("profiletoko.jsp?statusEdit='0'");
+            rd.forward(request, response);
         } else {
             da.updateBarang(Integer.parseInt(request.getParameter("idBarang")), request.getParameter("nama"), request.getParameter("harga"));
-            response.sendRedirect("profiletoko.jsp?statusEdit=1");
+            RequestDispatcher rd
+                    = request.getRequestDispatcher("profiletoko.jsp?statusEdit='1'");
+            rd.forward(request, response);
         }
     }
 
