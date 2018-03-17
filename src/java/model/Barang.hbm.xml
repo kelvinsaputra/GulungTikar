@@ -14,37 +14,37 @@
         <property name="hargaBarang" type="string">
             <column name="harga_barang" not-null="true" />
         </property>
-        <set name="wishlistentries" table="wishlistentry" inverse="true" lazy="true" fetch="select">
+<!--        <set name="wishlistentries" table="wishlistentry" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
             <one-to-many class="model.Wishlistentry" />
         </set>
-        <set name="etalases" table="etalase" inverse="true" lazy="true" fetch="select">
+-->        <set name="etalases" table="etalase" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
             <one-to-many class="model.Etalase" />
-        </set>
+        </set><!--
         <set name="shoppingcartentries" table="shoppingcartentry" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
             <one-to-many class="model.Shoppingcartentry" />
         </set>
-        <set name="kategoris" table="kategoribarang" inverse="true" lazy="true" fetch="select">
+-->        <set name="kategoris" table="kategoribarang" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
             <many-to-many entity-name="model.Kategori">
                 <column name="ID_kategori" not-null="true" />
             </many-to-many>
-        </set>
+        </set><!--
         <set name="orderentries" table="orderentry" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_barang" not-null="true" />
             </key>
             <one-to-many class="model.Orderentry" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

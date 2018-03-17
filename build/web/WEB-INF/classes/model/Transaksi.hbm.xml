@@ -26,11 +26,11 @@
         <property name="alamatPengiriman" type="string">
             <column name="alamat_pengiriman" not-null="true" />
         </property>
-        <set name="orderentries" table="orderentry" inverse="true" lazy="true" fetch="select">
+<!--        <set name="orderentries" table="orderentry" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_transaksi" not-null="true" />
             </key>
             <one-to-many class="model.Orderentry" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

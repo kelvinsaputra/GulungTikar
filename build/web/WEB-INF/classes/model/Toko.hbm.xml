@@ -17,11 +17,11 @@
         <property name="status" type="boolean">
             <column name="status" not-null="true" />
         </property>
-        <set name="etalases" table="etalase" inverse="true" lazy="true" fetch="select">
+<!--        <set name="etalases" table="etalase" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_toko" not-null="true" />
             </key>
             <one-to-many class="model.Etalase" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

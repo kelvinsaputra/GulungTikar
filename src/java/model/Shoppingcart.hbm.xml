@@ -11,11 +11,11 @@
         <many-to-one name="pengguna" class="model.Pengguna" fetch="select">
             <column name="ID_pengguna" not-null="true" />
         </many-to-one>
-        <set name="shoppingcartentries" table="shoppingcartentry" inverse="true" lazy="true" fetch="select">
+<!--        <set name="shoppingcartentries" table="shoppingcartentry" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_shoppingcart" not-null="true" />
             </key>
             <one-to-many class="model.Shoppingcartentry" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

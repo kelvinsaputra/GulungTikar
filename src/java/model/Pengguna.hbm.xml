@@ -29,7 +29,7 @@
         <property name="saldo" type="int">
             <column name="saldo" not-null="true" />
         </property>
-        <set name="tokos" table="toko" inverse="true" lazy="true" fetch="select">
+<!--        <set name="tokos" table="toko" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_pengguna" not-null="true" />
             </key>
@@ -52,6 +52,6 @@
                 <column name="ID_pengguna" not-null="true" />
             </key>
             <one-to-many class="model.Wishlist" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>
