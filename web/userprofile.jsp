@@ -94,27 +94,39 @@
                             <button class="btn btn-success">Save</button>
                         </form>
                     </div>
+                </div>
+                    
+
                     <%
                         ArrayList<Toko> listToko = da.getToko(temp);
-                        if(listToko.size()!=1)
+                        if(listToko.size()!=1 && temp.getType().equals("Penjual"))
                         {
                         %>
-                    <div class="col-12">
-                        <h2>You don't have a shop yet! Make your first shop by entering it's address</h2>
-                        <form action="bukaToko" method="post">
-                            Shop Address : <input type="text" name="alamat">
-                            <button class="btn btn-primary" type="submit"> Create Shop </button>
+                    <div class="col-md-12">
+                        <hr>
+                        <h2>You don't have a shop yet! Make your first shop by entering its address</h2>
+                        <form action="bukaToko" method="post" class="">
+                            <center><div class="form-group">
+                                <input type="text" class="form-control col-4" name="alamat" placeholder="Shop Address">
+                            </div>
+                            <div class="form-group mx-auto">
+                                <button class="btn btn-primary col-4" type="submit"> Create Shop </button>
+                            </div></center>
                         </form>
                     </div>
                     <%
                         }
                         else
-                        {%>
-                        <a href='profiletoko.jsp'><button class="btn btn-primary" type="submit"> Manage Shop </button></a>
-                        <%
+                        {
+                    %>
+                    <div class="col-12">
+                    <hr>
+                        <h2>Manage your shop here</h2>
+                            <jsp:include page="profiletoko.jsp"/>
+                    </div>
+                    <%
                         }
-                        %>
-                </div>
+                    %>
             </div>
         </div>
         <br>

@@ -88,6 +88,15 @@ public class SystemDA {
         hasil = (ArrayList<Pengguna>) q.list();
         return hasil;
     }
+    
+    public Pengguna getUserById(int id) {
+        Session session = factory.openSession();
+        Pengguna hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Pengguna where id="+id);
+        hasil = (Pengguna) q.list().get(0);
+        return hasil;
+    }
 
     public boolean insertUser(Pengguna m) {
         Session session = factory.openSession();
@@ -321,6 +330,18 @@ public class SystemDA {
         Query q = session.createQuery("from Toko where id_pengguna="+p.getIdPengguna());
         hasil = (ArrayList<Toko>) q.list();
         return hasil;
+    }
+    
+    public Toko getToko2(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Toko where id_pengguna="+p.getIdPengguna());
+        if(q.list().size()>0){
+            Toko hasil = (Toko) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
     }
 
     //toko gaboleh didelete bray kan user nya penjual pembeli, kecuali kalo user ganti tipe, otomatis toko didelete

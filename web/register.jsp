@@ -37,13 +37,13 @@
                     <h3 class="h5 mb-3 font-weight-normal">Fill in the form below to get instant access:</h3>
                     <form action="registerServlet" method="post">
                         <div class="form-group">
-                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Name" required>
+                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Name" required autofocus>
                         </div>
                         <div class="form-group">
                             <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address" required autofocus>
+                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>

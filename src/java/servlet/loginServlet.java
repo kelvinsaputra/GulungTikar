@@ -98,7 +98,7 @@ public class loginServlet extends HttpServlet {
                 rd.forward(request, response);
             } else {
                 RequestDispatcher rd
-                        = request.getRequestDispatcher("nav.jsp");
+                        = request.getRequestDispatcher("index.jsp");
                 rd.forward(request, response);
             }
     }

@@ -23,8 +23,12 @@
             <div class="col-7 mr-auto">
                 <div class="col-12">
                     <form class="form-inline" action="#" method="GET">
-                        <input type="text" class="input-group-text col-10"/>
-                        <input type="submit" class="btn btn-primary col-2" value="Search"/>
+                        <div class="form-group  col-10">
+                            <input type="text" class="form-control col-12"/>
+                        </div>
+                        <div class="form-group col-2">
+                            <input type="submit" class="btn btn-primary" value="Search"/>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -37,32 +41,32 @@
                         int idPengguna=-1;
                         if(statusLogin!=null){
                             if(statusLogin.equals("1")){ //kalo ada yg login
-                            username = (String) request.getSession(false).getAttribute("username");
-                            idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+                                username = (String) request.getSession(false).getAttribute("username");
+                                idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
                             }
                         }
-                        
-                        if(username!=null && idPengguna!=-1){
-                            System.out.print("=========================================="+ username);
-                             System.out.print("=========================================="+ idPengguna);
-                       
-                        }
+//                        
+//                        if(username!=null && idPengguna!=-1){
+//                            System.out.print("=========================================="+ username);
+//                            System.out.print("=========================================="+ idPengguna);
+//                       
+//                        }
                         
                         if(username==null && idPengguna==-1){
-                    %>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="register.jsp">Sign up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="login.jsp">Log in</a>
-                    </li>
-                    <%} else {%>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="userprofile.jsp">My profile</a>
-                    </li>
-                    <%
+                        %>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="register.jsp">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="login.jsp">Log in</a>
+                        </li>
+                        <%} else {%>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="userprofile.jsp">My profile</a>
+                        </li>
+                        <%
                         
-                        ArrayList<Toko> toko = new ArrayList<Toko>();
+                      /* ArrayList<Toko> toko = new ArrayList<Toko>();
                         SystemDA da = new SystemDA();
                         toko = da.getAllToko();
                         boolean ketemu=false;
@@ -72,25 +76,22 @@
                                 ketemu = true; //cek semua toko ada yg dipunyain sama yg lagi login ga, kalo ada oke, kalo belom buttonnya buka Toko!
                             }
                         }
-
-                        if(ketemu){
+                        
+                        
+*/
+                       Pengguna pengguna = new SystemDA().getUserById(idPengguna);
+                       if(pengguna.getType().equals("Penjual")){
+                            Toko tokoPenjual = new SystemDA().getToko2(pengguna);
+                            if(tokoPenjual!=null){
                     %>        
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="profiletoko.jsp">Cek Toko!</a>
-                    </li>  
-                    <%   
-                        } else {
-                    %>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="toko.jsp">Buka Toko!</a>
-                    </li>
-                    <%
-                    }
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="profiletoko.jsp">My Shop</a>
+                        </li>  
 
-                    %>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="logoutServlet">Logout</a>
-                    </li>
+                            <%}}%>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="logoutServlet">Logout</a>
+                        </li>
                     <%}%>
                 </ul>
             </div>

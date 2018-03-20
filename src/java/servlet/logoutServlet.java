@@ -56,7 +56,7 @@ public class logoutServlet extends HttpServlet {
 
         request.getSession(false).invalidate();
         RequestDispatcher rd
-                = request.getRequestDispatcher("nav.jsp");
+                = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
     }
 
