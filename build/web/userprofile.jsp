@@ -99,7 +99,9 @@
 
                     <%
                         ArrayList<Toko> listToko = da.getToko(temp);
-                        if(listToko.size()!=1 && temp.getType().equals("Penjual"))
+                        Toko toko = da.getToko2(temp);
+                        if(temp.getType().equals("Penjual")){
+                        if(toko==null)
                         {
                         %>
                     <div class="col-md-12">
@@ -125,7 +127,7 @@
                             <jsp:include page="profiletoko.jsp"/>
                     </div>
                     <%
-                        }
+                        }}
                     %>
             </div>
         </div>
