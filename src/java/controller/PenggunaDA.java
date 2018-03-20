@@ -29,7 +29,7 @@ public class PenggunaDA {
             e.printStackTrace();
         }
     }
-    public void register(Pengguna p)
+    public boolean register(Pengguna p)
     {
         ArrayList<Pengguna> listPengguna = new ArrayList();
         listPengguna = SDA.getAllUser();
@@ -55,7 +55,7 @@ public class PenggunaDA {
         if(found)
         {
             System.out.println("Register Fail");
-
+            return false;
         }
         else
         {
@@ -66,6 +66,7 @@ public class PenggunaDA {
             tx.commit();
             session.close();
             factory.close();
+            return true;
         }
     }
     

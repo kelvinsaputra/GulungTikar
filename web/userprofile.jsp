@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="model.Session"%>
-<%@page import="model.Pengguna"%>
+<%@page import="model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="controller.*"%>
 <%@page import="java.util.ArrayList"%>
@@ -94,6 +94,26 @@
                             <button class="btn btn-success">Save</button>
                         </form>
                     </div>
+                    <%
+                        ArrayList<Toko> listToko = da.getToko(temp);
+                        if(listToko.size()!=1)
+                        {
+                        %>
+                    <div class="col-12">
+                        <h2>You don't have a shop yet! Make your first shop by entering it's address</h2>
+                        <form action="bukaToko" method="post">
+                            Shop Address : <input type="text" name="alamat">
+                            <button class="btn btn-primary" type="submit"> Create Shop </button>
+                        </form>
+                    </div>
+                    <%
+                        }
+                        else
+                        {%>
+                        <a href='profiletoko.jsp'><button class="btn btn-primary" type="submit"> Manage Shop </button></a>
+                        <%
+                        }
+                        %>
                 </div>
             </div>
         </div>

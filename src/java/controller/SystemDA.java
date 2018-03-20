@@ -313,6 +313,15 @@ public class SystemDA {
         hasil = (ArrayList<Toko>) q.list();
         return hasil;
     }
+    
+    public ArrayList<Toko> getToko(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+        Session session = factory.openSession();
+        ArrayList<Toko> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Toko where id_pengguna="+p.getIdPengguna());
+        hasil = (ArrayList<Toko>) q.list();
+        return hasil;
+    }
 
     //toko gaboleh didelete bray kan user nya penjual pembeli, kecuali kalo user ganti tipe, otomatis toko didelete
     //deletenya harus delete semua deh yg terkait sm toko jadi cascade / something ini temp aja dulu

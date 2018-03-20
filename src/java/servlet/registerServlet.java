@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Pengguna;
 
 /**
@@ -88,10 +89,20 @@ public class registerServlet extends HttpServlet {
         temp.setNoRekening(Integer.parseInt(request.getParameter("norekening")));
         temp.setSaldo(0);
         PenggunaDA da = new PenggunaDA();
-        da.register(temp);
-        RequestDispatcher rd
-                = request.getRequestDispatcher("index.jsp");
+        if(da.register(temp))
+        {
+            HttpSession session = request.getSession();
+                session.setAttribute("username", temp.getNama());
+                session.setAttribute("idPengguna", temp.getIdPengguna());
+                session.setAttribute("statusLogin", "1");
+                RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
+                rd.forward(request, response);
+        }
+        else
+        {
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
+        }
     }
 
     /**

@@ -65,7 +65,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit">Login</button>
+                            <button class="btn btn-primary" type="submit">Register</button>
                         </div>
                     </form>
                 </div>
