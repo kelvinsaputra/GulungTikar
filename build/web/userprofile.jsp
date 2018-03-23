@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>GulungTikar Register</title>
+        <title><%=(String) request.getSession(false).getAttribute("username")%>'s Profile</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -123,7 +123,7 @@
                     %>
                     <div class="col-12">
                     <hr>
-                        <h2>Manage your shop here</h2>
+                        <center><h2>Manage Shop</h2></center>
                             <jsp:include page="profiletoko.jsp"/>
                     </div>
                     <%

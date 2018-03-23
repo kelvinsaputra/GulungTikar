@@ -323,6 +323,14 @@ public class SystemDA {
         return hasil;
     }
     
+    public int getIDBarang() { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("SELECT idBarang FROM Barang ORDER BY idBarang DESC");
+        Integer hasil = (Integer) q.list().get(0);
+        return hasil;
+    }
+    
     public ArrayList<Toko> getToko(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
         Session session = factory.openSession();
         ArrayList<Toko> hasil = null;
