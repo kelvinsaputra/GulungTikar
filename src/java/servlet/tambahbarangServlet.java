@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -39,8 +40,9 @@ import model.Toko;
  */
 @WebServlet(name = "tambahbarangServlet", urlPatterns = {"/tambahbarangServlet"})
 @MultipartConfig
-public class tambahbarangServlet extends HttpServlet {
 
+public class tambahbarangServlet extends HttpServlet {
+    public static String path;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,13 +57,16 @@ public class tambahbarangServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+
+            
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet tambahbarangServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet tambahbarangServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet tambahbarangServlet at " + path + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -95,16 +100,22 @@ public class tambahbarangServlet extends HttpServlet {
             throws ServletException, IOException {
         //        processRequest(request, response);
         SystemDA da = new SystemDA();
-        final String path = "D:\\Git\\GulungTikar\\web\\css";
+        
+        ServletContext context = request.getServletContext();
+        path = context.getRealPath("/");
+//        final String path = "D:\\Git\\GulungTikar\\web\\css";
         final Part filePart = request.getPart("file");
         final int fileName = da.getIDBarang()+1;
+        File temppath = new File(path).getParentFile().getParentFile();
+        File fileBeneran = new File(temppath+"/web/res");
+        System.out.println("===============================-"+fileBeneran);
 
         OutputStream out = null;
         InputStream filecontent = null;
         final PrintWriter writer = response.getWriter();
 
         try {
-            out = new FileOutputStream(new File(path + File.separator
+            out = new FileOutputStream(new File(fileBeneran + File.separator
                     + fileName+".jpg"));
             filecontent = filePart.getInputStream();
 

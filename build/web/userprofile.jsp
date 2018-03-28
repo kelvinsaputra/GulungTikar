@@ -98,7 +98,6 @@
                     
 
                     <%
-                        ArrayList<Toko> listToko = da.getToko(temp);
                         Toko toko = da.getToko2(temp);
                         if(temp.getType().equals("Penjual")){
                         if(toko==null)

@@ -3,6 +3,7 @@
     Created on : Mar 12, 2018, 3:14:36 PM
     Author     : user
 --%>
+<%@page import="java.io.File"%>
 <%@page import="model.Session"%>
 <%@page import="model.Pengguna"%>
 <%@page import="model.Barang"%>
@@ -91,6 +92,10 @@
             <%
             ArrayList<Barang> barang = new ArrayList<Barang>();
             barang=da.getAllBarang();
+            String current = new java.io.File( "." ).getCanonicalPath();
+            System.out.println("Current dir:"+current);
+            File webRootPath = new File(application.getRealPath("/")).getParentFile().getParentFile();
+            System.out.println("Current dir:"+webRootPath);
             for(int i=0;i<etalase.size();i++){
                 if(etalase.get(i).getToko().getIdToko()==temp.getIdToko()){
             %>
@@ -100,7 +105,7 @@
                         if(barang.get(j).getIdBarang()==etalase.get(i).getBarang().getIdBarang()){
                 %>
                 <td><%=j+1%></td>
-                <td><img alt="User picture" src="css/<%=barang.get(j).getIdBarang()%>.jpg" class="img-fluid rounded"/></td>
+                <td><img alt="User picture" src="res/<%=barang.get(j).getIdBarang()%>.jpg" class="img-fluid rounded"/></td>
                 <td><%=barang.get(j).getNamaBarang()%></td>
                 <td><%=barang.get(j).getHargaBarang()%></td>
                 <td><%=etalase.get(i).isKetersediaan()%></td>

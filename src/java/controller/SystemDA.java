@@ -327,8 +327,12 @@ public class SystemDA {
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("SELECT idBarang FROM Barang ORDER BY idBarang DESC");
-        Integer hasil = (Integer) q.list().get(0);
-        return hasil;
+        if(!q.list().isEmpty()){
+            Integer hasil = (Integer) q.list().get(0);
+            return hasil;
+        } else {
+            return 6;
+        }
     }
     
     public ArrayList<Toko> getToko(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
