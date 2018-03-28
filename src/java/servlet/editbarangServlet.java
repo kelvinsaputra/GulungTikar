@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controller.PenjualDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,7 +76,7 @@ public class editbarangServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-
+        PenjualDA pa = new PenjualDA();
         SystemDA da = new SystemDA();
 
         if (request.getParameter("idBarang").isEmpty() || request.getParameter("harga").isEmpty() || request.getParameter("nama").isEmpty()) {
@@ -83,7 +84,7 @@ public class editbarangServlet extends HttpServlet {
                     = request.getRequestDispatcher("profiletoko.jsp?statusEdit='0'");
             rd.forward(request, response);
         } else {
-            da.updateBarang(Integer.parseInt(request.getParameter("idBarang")), request.getParameter("nama"), request.getParameter("harga"));
+            pa.updateBarang(Integer.parseInt(request.getParameter("idBarang")), request.getParameter("nama"), request.getParameter("harga"));
             RequestDispatcher rd
                     = request.getRequestDispatcher("profiletoko.jsp?statusEdit='1'");
             rd.forward(request, response);

@@ -138,31 +138,6 @@ public class SystemDA {
         hasil = (ArrayList<Barang>) q.list();
         return hasil;
     }
-
-    public void deleteBarang(int x) {
-        s.beginTransaction();
-        Query query = s.createQuery("delete from Barang where id_barang=" + x);
-        int exec = query.executeUpdate();
-        s.getTransaction().commit();
-    }
-
-    public void updateBarang(int id, String nama, String harga) {
-        s.beginTransaction();
-        Query query = s.createQuery("update Barang set nama_barang = '" + nama + "', harga_barang = '" + harga + "'  where id_barang = " + id);
-        int exec = query.executeUpdate();
-        s.getTransaction().commit();
-    }
-
-    public int insertBarang(Barang m) { //harusnya insert barang langsung insert ke etalase berhubungan sm toko jg, jadi sekaligus di servletnya,
-        //asa aneh kalo bisa insert barang seenaknya tp gamasuk ke toko/etalase penjual
-        Session session = factory.openSession();
-        ArrayList<Barang> hasil = null;
-        Transaction tx = session.beginTransaction();
-        int a = (Integer) session.save(m);
-        tx.commit();
-        session.close();
-        return a;
-    }    
     
 //    public ArrayList<Barang> getBarang(int x) {
 //        s.beginTransaction();
@@ -179,14 +154,18 @@ public class SystemDA {
         return hasil;
     }
 
-//    public ArrayList<Etalase> getEtalase() {
-//        Session session = factory.openSession();
-//        ArrayList<Etalase> hasil = null;
-//        Transaction tx = session.beginTransaction();
-//        Query q = session.createQuery("from Etalase");
-//        hasil = (ArrayList<Etalase>) q.list();
-//        return hasil;
-//    }
+    public Etalase getEtalaseByID(int idBarang)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Etalase where id_barang="+idBarang);
+        if(q.list().size()>0){
+            Etalase hasil = (Etalase) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
     public void deleteEtalase(int idBarang, int idToko) {
         s.beginTransaction();
         Query query = s.createQuery("delete from Etalase where id_barang=" + idBarang + " and id_toko =" + idToko); //disini many to many jd deletenya di etalase pengguna siapa jg harus dicek
@@ -304,15 +283,7 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public boolean insertShoppingcartentry(Shoppingcartentry m) {
-        Session session = factory.openSession();
-        ArrayList<Shoppingcartentry> hasil = null;
-        Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(m);
-        tx.commit();
-        session.close();
-        return true;
-    }
+    
 
     public ArrayList<Toko> getAllToko() { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
         Session session = factory.openSession();
@@ -344,6 +315,7 @@ public class SystemDA {
         return hasil;
     }
     
+    
     public Toko getToko2(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
@@ -372,15 +344,7 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public boolean insertToko(Toko m) { //inisialisasi pas user buat, bisa otomatis panggil insertToko kalo user register tipe penjual
-        Session session = factory.openSession();
-        ArrayList<Toko> hasil = null;
-        Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(m);
-        tx.commit();
-        session.close();
-        return true;
-    }
+    
 
 //    public ArrayList<Toko> getToko() {
 //        Session session = factory.openSession();
@@ -449,15 +413,7 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public boolean insertWishlist(Wishlist m) { //inisialisasi pas user buat, bisa otomatis panggil insertWishlist kalo tipenya pembeli
-        Session session = factory.openSession();
-        ArrayList<Wishlist> hasil = null;
-        Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(m);
-        tx.commit();
-        session.close();
-        return true;
-    }
+    
 
 //    public ArrayList<Wishlist> getWishlist() {
 //        Session session = factory.openSession();

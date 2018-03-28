@@ -6,6 +6,7 @@
 package servlet;
 
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import controller.PenjualDA;
 import controller.SystemDA;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -100,7 +101,7 @@ public class tambahbarangServlet extends HttpServlet {
             throws ServletException, IOException {
         //        processRequest(request, response);
         SystemDA da = new SystemDA();
-        
+        PenjualDA pa = new PenjualDA();
         ServletContext context = request.getServletContext();
         path = context.getRealPath("/");
 //        final String path = "D:\\Git\\GulungTikar\\web\\css";
@@ -153,7 +154,7 @@ public class tambahbarangServlet extends HttpServlet {
                     temp.setKategoris(kategoris);
 
                     EtalaseId idetalase = new EtalaseId();
-                    idetalase.setIdBarang(da.insertBarang(temp));
+                    idetalase.setIdBarang(pa.insertBarang(temp));
                     idetalase.setIdToko(Integer.parseInt(request.getParameter("idToko")));
 
                     ArrayList<Toko> toko = new ArrayList<Toko>();

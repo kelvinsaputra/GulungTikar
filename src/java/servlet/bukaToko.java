@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controller.PenjualDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -89,6 +90,7 @@ public class bukaToko extends HttpServlet {
         SystemDA da = new SystemDA();
         Toko newToko = new Toko();
         Pengguna tempuser = new Pengguna();
+        PenjualDA pa = new PenjualDA();
         ArrayList<Pengguna> user = new ArrayList<Pengguna>();
 
         user = da.getAllUser();
@@ -103,7 +105,7 @@ public class bukaToko extends HttpServlet {
         newToko.setPengguna(tempuser);
         newToko.setStatus(true);
 
-        da.insertToko(newToko);
+        pa.insertToko(newToko);
 
         RequestDispatcher rd
                 = request.getRequestDispatcher("userprofile.jsp");

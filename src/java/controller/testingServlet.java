@@ -23,7 +23,7 @@ public class testingServlet {
 //         Session current = new Session();
         SystemDA da = new SystemDA();
         Barang temp = new Barang();
-        
+        PenjualDA pa = new PenjualDA();
         HashSet<Kategori> kategoris = new HashSet();
         ArrayList<Kategori> kategori = new ArrayList<Kategori>();
         kategori = da.getAllKategori();
@@ -59,7 +59,7 @@ public class testingServlet {
 
 //        System.out.println(da.insertBarang());
         EtalaseId idetalase = new EtalaseId();
-        idetalase.setIdBarang(da.insertBarang(temp));
+        idetalase.setIdBarang(pa.insertBarang(temp));
         idetalase.setIdToko(5);
         
         ArrayList<Toko> toko = new ArrayList<Toko>();

@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controller.PenjualDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,9 +78,9 @@ public class deletebarangServlet extends HttpServlet {
 //        processRequest(request, response);
 
         SystemDA da = new SystemDA();
-
+        PenjualDA pa = new PenjualDA();
         da.deleteEtalase(Integer.parseInt(request.getParameter("idBarang")), Integer.parseInt(request.getParameter("idToko")));
-        da.deleteBarang(Integer.parseInt(request.getParameter("idBarang")));
+        pa.deleteBarang(Integer.parseInt(request.getParameter("idBarang")));
 
         RequestDispatcher rd
                 = request.getRequestDispatcher("profiletoko.jsp");

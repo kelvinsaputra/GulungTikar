@@ -4,6 +4,12 @@
     Author     : fsury
 --%>
 
+<%@page import="model.Pengguna"%>
+<%@page import="model.Toko"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
+<%@page import="model.Etalase"%>
+<%@page import="java.util.HashSet"%>
 <%@page import="model.Barang"%>
 <%@page import="controller.SystemDA"%>
 <%@page import="java.util.ArrayList"%>
@@ -100,7 +106,9 @@
                         <hr class="col-12">
 
                         <%
-                            ArrayList<Barang> listBarang = new SystemDA().getAllBarang();
+                            SystemDA da = new SystemDA();
+                            ArrayList<Barang> listBarang =  da.getAllBarang();
+                            Set<Etalase> listEtalase;
                             for (int i = 0; i < listBarang.size(); i++) {
                         %>    
 
@@ -111,8 +119,13 @@
                                     <h4 class="card-title">
                                         <a href="#"><%= listBarang.get(i).getNamaBarang()%></a>
                                     </h4>
-                                    <h5>Rp. <%= listBarang.get(i).getHargaBarang()%></h5>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                    <h5>Rp. <%= listBarang.get(i).getHargaBarang()%>,00</h5>
+                                    <%
+                                        Etalase etalase = da.getEtalaseByID(listBarang.get(i).getIdBarang());
+                                        Toko toko = etalase.getToko();
+                                        Pengguna pengguna = toko.getPengguna();
+                                    %>
+                                    <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
