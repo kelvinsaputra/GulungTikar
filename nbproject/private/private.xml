@@ -3,26 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/testDOA.java</file>
-            <file>file:/D:/Git/GulungTikar/web/footer.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/login.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Pengguna.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Barang.hbm.xml</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Barang.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/loginServlet.java</file>
-            <file>file:/D:/Git/GulungTikar/web/userprofile.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/profiletoko.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/register.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/PenggunaDA.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/util/HibernateUtil.java</file>
-            <file>file:/D:/Git/GulungTikar/web/nav.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/index.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/registerServlet.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/editToko.java</file>
-            <file>file:/D:/Git/GulungTikar/web/shoppingcart.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/SystemDA.java</file>
-            <file>file:/D:/Git/GulungTikar/web/tambahbarang.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/tambahbarangServlet.java</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/web/editbarang.jsp</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/src/java/servlet/tambahbarangServlet.java</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/web/index.jsp</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/src/java/servlet/wishlist.java</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/web/barang.jsp</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/web/profiletoko.jsp</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/web/userprofile.jsp</file>
+            <file>file:/C:/Users/user/Documents/GitHub/GulungTikar/src/java/controller/SystemDA.java</file>
         </group>
     </open-files>
 </project-private>

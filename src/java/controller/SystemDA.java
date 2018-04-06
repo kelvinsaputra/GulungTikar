@@ -139,6 +139,19 @@ public class SystemDA {
         return hasil;
     }
     
+    public Barang getBarangByID(int idBarang)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang where id_barang="+idBarang);
+        if(q.list().size()>0){
+            Barang hasil = (Barang) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
 //    public ArrayList<Barang> getBarang(int x) {
 //        s.beginTransaction();
 //        Query query = s.createQuery("select from Barang where id_barang=" + x);
@@ -327,6 +340,18 @@ public class SystemDA {
             return null;
         }
     }
+    
+    public Wishlist getWishlist(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Wishlist where id_pengguna="+p.getIdPengguna());
+        if(q.list().size()>0){
+            Wishlist hasil = (Wishlist) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
 
     //toko gaboleh didelete bray kan user nya penjual pembeli, kecuali kalo user ganti tipe, otomatis toko didelete
     //deletenya harus delete semua deh yg terkait sm toko jadi cascade / something ini temp aja dulu
@@ -413,7 +438,15 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    
+    public int insertWishlist(Wishlist m) { //inisialisasi pas user buat, bisa otomatis panggil insertWishlist kalo tipenya pembeli
+        Session session = factory.openSession();
+        ArrayList<Wishlist> hasil = null;
+        Transaction tx = session.beginTransaction();
+        int a = (Integer) session.save(m);
+        tx.commit();
+        session.close();
+        return a;
+    }    
 
 //    public ArrayList<Wishlist> getWishlist() {
 //        Session session = factory.openSession();
@@ -423,15 +456,19 @@ public class SystemDA {
 //        hasil = (ArrayList<Wishlist>) q.list();
 //        return hasil;
 //    }
-    public ArrayList<Wishlistentry> getAllWishlistentry() {
+    public ArrayList<Wishlistentry> getAllWishlistentry(int idWishlist) {
         Session session = factory.openSession();
         ArrayList<Wishlistentry> hasil = null;
         Transaction tx = session.beginTransaction();
-        Query q = session.createQuery("from Wishlistentry");
+        Query q = session.createQuery("from Wishlistentry where id_wishlist="+idWishlist);
         hasil = (ArrayList<Wishlistentry>) q.list();
-        return hasil;
+        if(q.list().size()>0){
+            return hasil;
+        } else {
+            return null;
+        }
     }
-
+    
     public void deleteWishlistentry(int idPengguna, int idBarang) {
         s.beginTransaction();
         Query query = s.createQuery("delete from Wishlistentry where id_barang=" + idBarang + "and id_wishlist in (select id_wishlist from wishlist where id_pengguna=" + idPengguna+")");

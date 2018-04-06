@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 28, 2018 5:28:49 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Pengguna" table="pengguna" catalog="gulungtikar" optimistic-lock="version">
+        <id name="idPengguna" type="java.lang.Integer">
+            <column name="ID_pengguna" />
+            <generator class="identity" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" not-null="true" />
+        </property>
+        <property name="nama" type="string">
+            <column name="nama" not-null="true" />
+        </property>
+        <property name="alamatRumah" type="string">
+            <column name="alamat_rumah" not-null="true" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" not-null="true" />
+        </property>
+        <property name="noRekening" type="int">
+            <column name="no_rekening" not-null="true" />
+        </property>
+        <property name="saldo" type="int">
+            <column name="saldo" not-null="true" />
+        </property>
+<!--        <set name="tokos" table="toko" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_pengguna" not-null="true" />
+            </key>
+            <one-to-many class="model.Toko" />
+        </set>
+        <set name="shoppingcarts" table="shoppingcart" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_pengguna" not-null="true" />
+            </key>
+            <one-to-many class="model.Shoppingcart" />
+        </set>
+        <set name="transaksis" table="transaksi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_pengguna" not-null="true" />
+            </key>
+            <one-to-many class="model.Transaksi" />
+        </set>
+        <set name="wishlists" table="wishlist" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_pengguna" not-null="true" />
+            </key>
+            <one-to-many class="model.Wishlist" />
+        </set>-->
+    </class>
+</hibernate-mapping>
