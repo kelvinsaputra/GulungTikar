@@ -3,6 +3,7 @@
     Created on : Apr 2, 2018, 5:13:51 PM
     Author     : user
 --%>
+<%@page import="java.util.Random"%>
 <%@page import="model.Pengguna"%>
 <%@page import="model.Toko"%>
 <%@page import="java.util.List"%>
@@ -27,6 +28,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="vendor/bootstrap/css/product-detail.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
         <!-- Custom styles for this template -->
@@ -55,68 +57,95 @@
             Etalase etalase = da.getEtalaseByID(idBarang);
             Toko toko = etalase.getToko();
             Pengguna pengguna = toko.getPengguna();
+        %>        
+        <div class="container">
+            <div class="card">
+                <div class="container-fliud">
+                    <div class="wrapper row">
+                        <div class="preview col-md-6">
 
-            if (username == null && idPengguna == -1) {
-        %>
+                            <div class="preview-pic tab-content">
+                                <div class="tab-pane active" id="pic-1"><img src="res/<%= barang.getIdBarang()%>.jpg" /></div>
+                                <div class="tab-pane" id="pic-2"><img src="res/<%= barang.getIdBarang()%>.jpg" /></div>
+                                <div class="tab-pane" id="pic-3"><img src="res/<%= barang.getIdBarang()%>.jpg" /></div>
+                                <div class="tab-pane" id="pic-4"><img src="res/<%= barang.getIdBarang()%>.jpg" /></div>
+                                <div class="tab-pane" id="pic-5"><img src="res/<%= barang.getIdBarang()%>.jpg" /></div>
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="res/<%= barang.getIdBarang()%>.jpg" /></a></li>
+                                <li><a data-target="#pic-2" data-toggle="tab"><img src="res/<%= barang.getIdBarang()%>.jpg" /></a></li>
+                                <li><a data-target="#pic-3" data-toggle="tab"><img src="res/<%= barang.getIdBarang()%>.jpg" /></a></li>
+                                <li><a data-target="#pic-4" data-toggle="tab"><img src="res/<%= barang.getIdBarang()%>.jpg" /></a></li>
+                                <li><a data-target="#pic-5" data-toggle="tab"><img src="res/<%= barang.getIdBarang()%>.jpg" /></a></li>
+                            </ul>
 
-        Toko : <a href="#"> <%=pengguna.getNama()%>'s Shop </a><br>
-        Alamat : <%=toko.getAlamatToko()%><br>
-        Nama : <%= barang.getNamaBarang()%><br>
-        Harga : <%= barang.getHargaBarang()%><br>
-        <%
-        } else {
-            //cek tipe kalo udah ada yg login
-            Pengguna user = da.getUserById(idPengguna); //pengguna yg lagi login, kalo diatas pengguna yg punya toko
-            if (user.getType().equals("Pembeli")) {//kalo pembeli yg login view barang
-        %>
-        Toko : <a href="#> "<%=pengguna.getNama()%>'s Shop </a><br>
-        Alamat : <%=toko.getAlamatToko()%><br>
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <a href="barang.jsp?idBarang=<%=barang.getIdBarang()%>"><img class="card-img-top" src="res/<%= barang.getIdBarang()%>.jpg" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="barang.jsp?idBarang=<%=barang.getIdBarang()%>"><%= barang.getNamaBarang()%></a>
-                    </h4>
-                    <h5>Rp. <%=barang.getHargaBarang()%>,00</h5>
-                    <%
-                        Etalase etalasee = da.getEtalaseByID(barang.getIdBarang());
-                        Toko tokoo = etalasee.getToko();
-                        Pengguna penggunaa = tokoo.getPengguna();
-                    %>
-                    <p class="card-text"><%=penggunaa.getNama()%>'s Shop</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                        <div class="details col-md-6">
+                            <h3 class="product-title"><%= barang.getNamaBarang()%></h3>
+                            <div class="rating">
+                                <div class="stars">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </div>
+                                <span class="review-no">Toko : <a href="#"> <%=pengguna.getNama()%>'s Shop </a><br></span>
+                                <span class="review-no">Alamat : <%=toko.getAlamatToko()%><br></span>
+                            </div>
+                            <p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
+                            <h4 class="price">Harga : <span><%= barang.getHargaBarang()%></span></h4>
+                            <% Random rand = new Random();
+                               int n = rand.nextInt(50)+50; %>
+                            <p class="vote"><strong><%=n%>%</strong> merasa puas dengan produk ini! <strong>(Survey penjual)</strong></p>
+                            
+                            <% if (username == null && idPengguna == -1) { %>
+                            <br><br>
+                            <div class="action">
+                                <button class="add-to-cart btn btn-default" type="button"><a href="/GulungTikar/login.jsp" style="text-decoration: none; color: white;">add to cart</a></button>
+                            </div>
+                            <%
+                            } else {
+                                //cek tipe kalo udah ada yg login
+                                Pengguna user = da.getUserById(idPengguna); //pengguna yg lagi login, kalo diatas pengguna yg punya toko
+                                if (user.getType().equals("Pembeli")) {//kalo pembeli yg login view barang
+                                    Etalase etalasee = da.getEtalaseByID(barang.getIdBarang());
+                                    Toko tokoo = etalasee.getToko();
+                                    Pengguna penggunaa = tokoo.getPengguna();
+                                    String tersedia = "Tidak";
+                                    if(etalasee.isKetersediaan()){
+                                        tersedia = "Ya";
+                                    }
+                            %>
+                            <span class="review-no">Tersedia : <%=tersedia%><br></span>
+                            <br><br>
+                            <div class="action">
+                                <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                                <button class="add-to-cart btn btn-default" type="button" style="background-color: pink; color: black;">add to wishlist</button>
+                            </div>
+                            <%
+                                } else if (user.getType().equals("Penjual")) { //kalo penjual yg login view barang, nanti line ini kebawah bisa jadi else aja jd ga redundan, kecuali next step ada yg dibedain
+                            %>
+                            <div class="action">
+                                <button class="add-to-cart btn btn-default" type="button" disabled>add to cart</button>
+                            </div>
+                            <%
+                                } else { //kalo admin yg login view barang
+                            %>
+                            <div class="action">
+                                <button class="add-to-cart btn btn-default" type="button" disabled>add to cart</button>
+                            </div>
+                            <%
+                                       }
+                                    }
+                            %>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <input type="submit" formaction="addToCart?idBarang=<%=idBarang%>" value="Add to cart!">
-        <form action="wishlist?idBarang=<%=idBarang%>" method="post">
-            <input type="submit" value="Add to Wishlist!">
-        </form>
-
-        <%
-        } else if (user.getType().equals("Penjual")) { //kalo penjual yg login view barang, nanti line ini kebawah bisa jadi else aja jd ga redundan, kecuali next step ada yg dibedain
-        %>
-        Toko : <a href="#> "<%=pengguna.getNama()%>'s Shop </a><br>
-        Alamat : <%=toko.getAlamatToko()%><br>
-        Nama : <%= barang.getNamaBarang()%><br>
-        Harga : <%= barang.getHargaBarang()%><br>
-        <%
-        } else { //kalo admin yg login view barang
-        %>
-        Toko : <a href="#> "<%=pengguna.getNama()%>'s Shop </a><br>
-        Alamat : <%=toko.getAlamatToko()%><br>
-        Nama : <%= barang.getNamaBarang()%><br>
-        Harga : <%= barang.getHargaBarang()%><br>
-        <%
-                }
-
-            }
-
-
-        %>
+       
+        <br/>
         <footer class="py-5 bg-dark">
             <div class="container">
                 <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
