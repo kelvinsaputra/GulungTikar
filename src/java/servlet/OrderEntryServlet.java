@@ -5,27 +5,28 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
-//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.Orderentry;
+import model.OrderentryId;
 import model.Pengguna;
-import model.Session;
+import model.Shoppingcartentry;
+import model.Transaksi;
 
 /**
  *
- * @author Ryou
+ * @author LENOVO
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "OrderEntryServlet", urlPatterns = {"/OrderEntryServlet"})
+public class OrderEntryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +45,10 @@ public class loginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
+            out.println("<title>Servlet OrderEntryServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderEntryServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,7 +66,26 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        SystemDA da = new SystemDA();
+        int idSc = (Integer) request.getAttribute("idSc");
+        int idPengguna = (Integer) request.getAttribute("idPengguna");
+        ArrayList<Shoppingcartentry> temp = new ArrayList<>();
+        temp = da.getShoppingcartentryByID(idSc);
+        Transaksi transaksi = da.getTransaksibyUserId(idPengguna);
+        for(int i=0; i<temp.size(); i++){
+            Orderentry newOrder = new Orderentry();
+            OrderentryId newId = new OrderentryId(transaksi.getIdTransaksi(), temp.get(i).getBarang().getIdBarang());
+            newOrder.setId(newId);
+            newOrder.setTransaksi(transaksi);
+            newOrder.setBarang(temp.get(i).getBarang());
+            newOrder.setQty(temp.get(i).getQty());
+
+            da.insertOrderentry(newOrder);
+            da.deleteShoppingcartentry(temp.get(i).getBarang().getIdBarang(), idPengguna);
+        }
+        RequestDispatcher rd
+                = request.getRequestDispatcher("userprofile.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -79,29 +99,24 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Pengguna temp = new Pengguna();
-        Pengguna pengguna = new Pengguna();
-        SystemDA SDA = new SystemDA();
-        PenggunaDA PDA = new PenggunaDA();
-        Boolean login=false;
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        pengguna = PDA.login(temp);
-        if(pengguna!=null)
-        {
-           HttpSession session = request.getSession();
-                session.setAttribute("username", pengguna.getNama());
-                session.setAttribute("idPengguna", pengguna.getIdPengguna());
-                session.setAttribute("type", pengguna.getType());
-                session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
-            } else {
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("index.jsp");
-                rd.forward(request, response);
-            }
+        SystemDA da = new SystemDA();
+        int idSc = (Integer) request.getAttribute("idSc");
+        int idPengguna = (Integer) request.getAttribute("idPengguna");
+        ArrayList<Shoppingcartentry> temp = new ArrayList<>();
+        temp = da.getShoppingcartentryByID(idSc);
+        Transaksi transaksi = da.getTransaksibyUserId(idPengguna);
+        for(int i=0; i<temp.size(); i++){
+            Orderentry newOrder = new Orderentry();
+            newOrder.setTransaksi(transaksi);
+            newOrder.setBarang(temp.get(i).getBarang());
+            newOrder.setQty(temp.get(i).getQty());
+
+            da.insertOrderentry(newOrder);
+            da.deleteShoppingcartentry(temp.get(i).getBarang().getIdBarang(), idPengguna);
+        }
+        RequestDispatcher rd
+                = request.getRequestDispatcher("userprofile.jsp");
+        rd.forward(request, response);
     }
 
     /**

@@ -152,6 +152,32 @@ public class SystemDA {
         }
     }
     
+    public Shoppingcart getShoppingcartByID(int idUser)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Shoppingcart where id_pengguna="+idUser);
+        if(q.list().size()>0){
+            Shoppingcart hasil = (Shoppingcart) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
+    public ArrayList<Shoppingcartentry> getShoppingcartentryByID(int idSC)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Shoppingcartentry where id_shoppingcart="+idSC);
+        if(q.list().size()>0){
+            ArrayList<Shoppingcartentry> hasil = (ArrayList<Shoppingcartentry>) q.list();
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
 //    public ArrayList<Barang> getBarang(int x) {
 //        s.beginTransaction();
 //        Query query = s.createQuery("select from Barang where id_barang=" + x);
@@ -263,9 +289,29 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public boolean insertShoppingcart(Shoppingcart m) {
+    public int insertShoppingcart(Shoppingcart m) {
         Session session = factory.openSession();
         ArrayList<Shoppingcart> hasil = null;
+        Transaction tx = session.beginTransaction();
+        int a = (Integer) session.save(m);
+        tx.commit();
+        session.close();
+        return a;
+    }
+    
+    public boolean insertShoppingcartentry(Shoppingcartentry m) { //inisialisasi pas user buat, bisa otomatis panggil insertToko kalo user register tipe penjual
+        Session session = factory.openSession();
+        ArrayList<Shoppingcartentry> hasil = null;
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(m);
+        tx.commit();
+        session.close();
+        return true;
+    }
+    
+    public boolean insertOrderentry (Orderentry m) { //inisialisasi pas user buat, bisa otomatis panggil insertToko kalo user register tipe penjual
+        Session session = factory.openSession();
+        ArrayList<Orderentry> hasil = null;
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(m);
         tx.commit();
@@ -411,6 +457,19 @@ public class SystemDA {
         tx.commit();
         session.close();
         return true;
+    }
+    
+    public Transaksi getTransaksibyUserId(int idPengguna)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Transaksi where id_pengguna="+idPengguna);
+        if(q.list().size()>0){
+            Transaksi hasil = (Transaksi) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
     }
 
 //    public ArrayList<Transaksi> getTransaksi() {

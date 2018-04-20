@@ -86,7 +86,18 @@
         <!-- Page Content -->
         <div class="tab">
             <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'editprofile')">Edit Profile</button>
+            <%
+                if(request.getSession(false).getAttribute("type").equals("Penjual")){
+            %>
             <button class="tablinks" onclick="openCity(event, 'manageshop')">Manage Shop</button>
+            <%
+                }
+                else
+                {%>
+            <button class="tablinks" onclick="openCity(event, 'manageshop')">Wishlist</button>
+            <button class="tablinks" onclick="openCity(event, 'shoppingcart')">Shopping Cart</button>
+            <%    }
+            %>
             <button class="tablinks" onclick="openCity(event, '')">Transaction History</button>
         </div>
         <div id="London" class="tabcontent">
@@ -240,6 +251,10 @@
                     %>
                 </div>
             </div>
+        </div>
+                
+        <div id="shoppingcart" class="tabcontent">
+            <jsp:include page="shoppingcart.jsp"/>
         </div>
 
         <br>

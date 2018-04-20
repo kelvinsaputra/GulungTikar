@@ -5,8 +5,6 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
-//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,16 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Pengguna;
-import model.Session;
 
 /**
  *
- * @author Ryou
+ * @author LENOVO
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "DeleteShoppingCartEntry", urlPatterns = {"/DeleteShoppingCartEntry"})
+public class DeleteShoppingCartEntry extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +39,10 @@ public class loginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
+            out.println("<title>Servlet DeleteShoppingCartEntry</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteShoppingCartEntry at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,29 +74,13 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Pengguna temp = new Pengguna();
-        Pengguna pengguna = new Pengguna();
-        SystemDA SDA = new SystemDA();
-        PenggunaDA PDA = new PenggunaDA();
-        Boolean login=false;
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        pengguna = PDA.login(temp);
-        if(pengguna!=null)
-        {
-           HttpSession session = request.getSession();
-                session.setAttribute("username", pengguna.getNama());
-                session.setAttribute("idPengguna", pengguna.getIdPengguna());
-                session.setAttribute("type", pengguna.getType());
-                session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
-            } else {
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("index.jsp");
-                rd.forward(request, response);
-            }
+        SystemDA da = new SystemDA();
+        
+
+
+        RequestDispatcher rd
+                = request.getRequestDispatcher("profiletoko.jsp");
+        rd.forward(request, response);
     }
 
     /**

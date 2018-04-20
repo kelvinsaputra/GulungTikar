@@ -120,8 +120,15 @@
                             <span class="review-no">Tersedia : <%=tersedia%><br></span>
                             <br><br>
                             <div class="action">
-                                <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                                <button class="add-to-cart btn btn-default" type="button" style="background-color: pink; color: black;">add to wishlist</button>
+                                <form action='ShoppingCartServlet?idBarang=<%=barang.getIdBarang()%>' method="post">
+                                    <input type='number' value='1' id="qty" name="qty"/>
+                                    <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
+                                </form>
+                                
+                                <form action='wishlist?idBarang=<%=barang.getIdBarang()%>' method='POST'>
+                                    <button class="add-to-cart btn btn-default" type="submit" style="background-color: pink; color: red;">add to wishlist</button>
+                                </form>
+                                
                             </div>
                             <%
                                 } else if (user.getType().equals("Penjual")) { //kalo penjual yg login view barang, nanti line ini kebawah bisa jadi else aja jd ga redundan, kecuali next step ada yg dibedain
