@@ -37,6 +37,7 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
+<<<<<<< HEAD
     <center><h1>Shopping Cart</h1></center>
     <hr>
         <%
@@ -53,6 +54,24 @@
             ArrayList<Shoppingcartentry> sce = da.getShoppingcartentryByID(shoppingcart.getIdShoppingcart());
             if(sce.size()!=0)
             {
+=======
+        
+        <%
+            String statusLogin = (String) request.getSession(false).getAttribute("statusLogin");
+            String username = null;
+            int idPengguna = -1;
+            if (statusLogin != null) {
+                if (statusLogin.equals("1")) { //kalo ada yg login
+                    username = (String) request.getSession(false).getAttribute("username");
+                    idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+                }
+            }
+
+            SystemDA da = new SystemDA();            
+            Shoppingcart shoppingcart = new Shoppingcart();
+            shoppingcart = da.getShoppingcartByID(idPengguna);
+            ArrayList<Shoppingcartentry> sce = da.getShoppingcartentryByID(shoppingcart.getIdShoppingcart());
+>>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
         %>
 
         <!-- Page Content -->
@@ -88,9 +107,13 @@
                         
                         <td data-th="Subtotal" class="text-center"></td>
                         <td class="actions" data-th="">
+<<<<<<< HEAD
                             <form action="deleteShoppingCartEntry" method="POST">
                                 <input type="hidden" name="idBarang" class="form-control" value="<%=sce.get(i).getBarang().getIdBarang()%>">
                                 <input type="hidden" name="idPengguna" class="form-control" value="<%=idPengguna%>">
+=======
+                            <form action="DeleteShoppingCartEntry">
+>>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
                                 <button class="btn btn-danger btn-sm">Delete</button>								
                             </form>
                         </td>
@@ -103,7 +126,12 @@
                         <td colspan="2" class="hidden-xs"></td>
                         <td class="hidden-xs text-center"><strong></strong></td>
                         <td>
+<<<<<<< HEAD
                             <form action="transaksi.jsp?idSc=<%=shoppingcart.getIdShoppingcart()%>" method="post">
+=======
+                            <form action="transaksi.jsp" method="post">
+                                <input type="hidden" id="idSc" name="idSc" value="">
+>>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
                                 <button class="btn btn-success btn-sm">Checkout</button>
                             </form>
                         </td>
@@ -121,8 +149,12 @@
         </div>
         <br>
 
+<<<<<<< HEAD
         <jsp:include page="footer.jsp"/>
 
+=======
+       
+>>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
