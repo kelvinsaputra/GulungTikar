@@ -94,7 +94,7 @@ public class TransaksiServlet extends HttpServlet {
         
         da.insertTransaksi(transaksi);
         
-        RequestDispatcher rd=request.getRequestDispatcher("/OrderEntryServlet");
+        RequestDispatcher rd=request.getRequestDispatcher("/orderEntryServlets");
         request.setAttribute("idSc", idSc);
         request.setAttribute("idPengguna", idPengguna);
         rd.forward(request, response);

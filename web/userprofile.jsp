@@ -85,52 +85,22 @@
         %>
         <!-- Page Content -->
         <div class="tab">
-<<<<<<< HEAD
-            <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'editprofile')">Profile</button>
-            <%
-                if(request.getSession(false).getAttribute("type").equals("Penjual"))
-                {
-                    
-                %>
-            <button id="manageshop" class="tablinks" onclick="openTab(event, 'manageshop')">Manage Shop</button>
-=======
-            <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'editprofile')">Edit Profile</button>
+
+            
+            <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'editprofile')">Edit Profile</button>
             <%
                 if(request.getSession(false).getAttribute("type").equals("Penjual")){
             %>
-            <button class="tablinks" onclick="openCity(event, 'manageshop')">Manage Shop</button>
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
+            <button class="tablinks" onclick="openTab(event, 'manageshop')">Manage Shop</button>
             <%
                 }
                 else
                 {%>
-<<<<<<< HEAD
             <button id="wishlist" class="tablinks" onclick="openTab(event, 'manageshop')">Wishlist</button>
                 <%
                 }
                 %>
             <button id="history" class="tablinks" onclick="openTab(event, '')">Transaction History</button>
-=======
-            <button class="tablinks" onclick="openCity(event, 'manageshop')">Wishlist</button>
-            <button class="tablinks" onclick="openCity(event, 'shoppingcart')">Shopping Cart</button>
-            <%    }
-            %>
-            <button class="tablinks" onclick="openCity(event, '')">Transaction History</button>
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
-        </div>
-        <div id="London" class="tabcontent">
-            <h3>London</h3>
-            <p>London is the capital city of England.</p>
-        </div>
-
-        <div id="Paris" class="tabcontent">
-            <h3>Paris</h3>
-            <p>Paris is the capital of France.</p>
-        </div>
-
-        <div id="Tokyo" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
         </div>
 
 
@@ -252,18 +222,8 @@ else
                         }
                     %>
                 </div>
-<<<<<<< HEAD
-</div>
-                
-        
-=======
             </div>
-        </div>
-                
-        <div id="shoppingcart" class="tabcontent">
-            <jsp:include page="shoppingcart.jsp"/>
-        </div>
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
+
 
         <br>
 

@@ -17,16 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Orderentry;
 import model.OrderentryId;
-import model.Pengguna;
 import model.Shoppingcartentry;
 import model.Transaksi;
 
 /**
  *
- * @author LENOVO
+ * @author Ryou
  */
-@WebServlet(name = "OrderEntryServlet", urlPatterns = {"/OrderEntryServlet"})
-public class OrderEntryServlet extends HttpServlet {
+@WebServlet(name = "orderEntryServlets", urlPatterns = {"/orderEntryServlets"})
+public class orderEntryServlets extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +44,10 @@ public class OrderEntryServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderEntryServlet</title>");            
+            out.println("<title>Servlet orderEntryServlets</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderEntryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet orderEntryServlets at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,26 +65,7 @@ public class OrderEntryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA da = new SystemDA();
-        int idSc = (Integer) request.getAttribute("idSc");
-        int idPengguna = (Integer) request.getAttribute("idPengguna");
-        ArrayList<Shoppingcartentry> temp = new ArrayList<>();
-        temp = da.getShoppingcartentryByID(idSc);
-        Transaksi transaksi = da.getTransaksibyUserId(idPengguna);
-        for(int i=0; i<temp.size(); i++){
-            Orderentry newOrder = new Orderentry();
-            OrderentryId newId = new OrderentryId(transaksi.getIdTransaksi(), temp.get(i).getBarang().getIdBarang());
-            newOrder.setId(newId);
-            newOrder.setTransaksi(transaksi);
-            newOrder.setBarang(temp.get(i).getBarang());
-            newOrder.setQty(temp.get(i).getQty());
-
-            da.insertOrderentry(newOrder);
-            da.deleteShoppingcartentry(temp.get(i).getBarang().getIdBarang(), idPengguna);
-        }
-        RequestDispatcher rd
-                = request.getRequestDispatcher("userprofile.jsp");
-        rd.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -99,18 +79,21 @@ public class OrderEntryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA da = new SystemDA();
+       SystemDA da = new SystemDA();
         int idSc = (Integer) request.getAttribute("idSc");
         int idPengguna = (Integer) request.getAttribute("idPengguna");
         ArrayList<Shoppingcartentry> temp = new ArrayList<>();
         temp = da.getShoppingcartentryByID(idSc);
+        OrderentryId id = new OrderentryId();
         Transaksi transaksi = da.getTransaksibyUserId(idPengguna);
         for(int i=0; i<temp.size(); i++){
             Orderentry newOrder = new Orderentry();
-            newOrder.setTransaksi(transaksi);
-            newOrder.setBarang(temp.get(i).getBarang());
+            id.setIdBarang(temp.get(i).getBarang().getIdBarang());
+            id.setIdTransaksi(transaksi.getIdTransaksi());
+            newOrder.setId(id);
+           
             newOrder.setQty(temp.get(i).getQty());
-
+            
             da.insertOrderentry(newOrder);
             da.deleteShoppingcartentry(temp.get(i).getBarang().getIdBarang(), idPengguna);
         }

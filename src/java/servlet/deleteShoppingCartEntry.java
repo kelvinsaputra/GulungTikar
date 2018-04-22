@@ -14,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Shoppingcart;
 
 /**
  *
- * @author LENOVO
+ * @author Ryou
  */
-@WebServlet(name = "DeleteShoppingCartEntry", urlPatterns = {"/DeleteShoppingCartEntry"})
-public class DeleteShoppingCartEntry extends HttpServlet {
+@WebServlet(name = "deleteShoppingCartEntry", urlPatterns = {"/deleteShoppingCartEntry"})
+public class deleteShoppingCartEntry extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class DeleteShoppingCartEntry extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteShoppingCartEntry</title>");            
+            out.println("<title>Servlet deleteShoppingCartEntry</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteShoppingCartEntry at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet deleteShoppingCartEntry at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,11 +76,12 @@ public class DeleteShoppingCartEntry extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SystemDA da = new SystemDA();
-        
-
-
+        int idBarang = Integer.parseInt(request.getParameter("idBarang"));
+        int idPengguna = Integer.parseInt(request.getParameter("idPengguna"));
+        Shoppingcart shoppingcart = da.getShoppingcartByID(idPengguna);
+        da.deleteShoppingcartentry(idBarang, shoppingcart.getIdShoppingcart());
         RequestDispatcher rd
-                = request.getRequestDispatcher("profiletoko.jsp");
+                = request.getRequestDispatcher("shoppingcart.jsp");
         rd.forward(request, response);
     }
 

@@ -126,7 +126,7 @@
                                 </form>
                                 
                                 <form action='wishlist?idBarang=<%=barang.getIdBarang()%>' method='POST'>
-<<<<<<< HEAD
+
                                     <button onclick="addtoWishList()" class="add-to-cart btn btn-default" type="submit" style="background-color: pink; color: red;">add to wishlist</button>
                                 </form>
                                 
@@ -136,11 +136,8 @@
                                 }
                                 </script>
 
-=======
-                                    <button class="add-to-cart btn btn-default" type="submit" style="background-color: pink; color: red;">add to wishlist</button>
-                                </form>
-                                
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
+
+                                   
                             </div>
                             <%
                                 } else if (user.getType().equals("Penjual")) { //kalo penjual yg login view barang, nanti line ini kebawah bisa jadi else aja jd ga redundan, kecuali next step ada yg dibedain

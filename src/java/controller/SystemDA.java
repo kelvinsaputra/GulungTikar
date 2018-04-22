@@ -178,7 +178,7 @@ public class SystemDA {
         }
     }
     
-<<<<<<< HEAD
+
     public ArrayList<Wishlistentry> getWishlistentryByID(int idW)
     {
         Session session = factory.openSession();
@@ -191,9 +191,7 @@ public class SystemDA {
             return null;
         }
     }
-    
-=======
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
+
 //    public ArrayList<Barang> getBarang(int x) {
 //        s.beginTransaction();
 //        Query query = s.createQuery("select from Barang where id_barang=" + x);
@@ -329,7 +327,7 @@ public class SystemDA {
         Session session = factory.openSession();
         ArrayList<Orderentry> hasil = null;
         Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(m);
+        session.save(m);
         tx.commit();
         session.close();
         return true;

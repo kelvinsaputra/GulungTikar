@@ -92,11 +92,10 @@ public class loginServlet extends HttpServlet {
            HttpSession session = request.getSession();
                 session.setAttribute("username", pengguna.getNama());
                 session.setAttribute("idPengguna", pengguna.getIdPengguna());
-<<<<<<< HEAD
                 session.setAttribute("type",pengguna.getType());
-=======
+
                 session.setAttribute("type", pengguna.getType());
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
+
                 session.setAttribute("statusLogin", "1");
                 RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
                 rd.forward(request, response);

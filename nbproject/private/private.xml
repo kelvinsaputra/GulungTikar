@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/D:/Git/GulungTikar/src/java/servlet/editbarangServlet.java</file>
+            <file>file:/D:/Git/GulungTikar/src/java/servlet/OrderEntryServlet.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Wishlist.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/ShoppingcartentryId.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/servlet/deletebarangServlet.java</file>
@@ -17,8 +17,7 @@
             <file>file:/D:/Git/GulungTikar/src/java/model/Shoppingcart.java</file>
             <file>file:/D:/Git/GulungTikar/web/editbarang.jsp</file>
             <file>file:/D:/Git/GulungTikar/src/java/controller/PenjualDA.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/deleteShoppingCartEntry.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/orderEntryServlet.java</file>
+            <file>file:/D:/Git/GulungTikar/src/java/servlet/DeleteShoppingCartEntry.java</file>
             <file>file:/D:/Git/GulungTikar/web/userprofile.jsp</file>
             <file>file:/D:/Git/GulungTikar/web/profiletoko.jsp</file>
             <file>file:/D:/Git/GulungTikar/web/css/bootstrap.css</file>
@@ -34,7 +33,6 @@
             <file>file:/D:/Git/GulungTikar/web/barang.jsp</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Pengguna.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Barang.hbm.xml</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/shoppingCartServlet.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/controller/PenggunaDA.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Shoppingcartentry.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Toko.java</file>
@@ -42,46 +40,16 @@
             <file>file:/D:/Git/GulungTikar/src/java/servlet/registerServlet.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/servlet/editToko.java</file>
             <file>file:/D:/Git/GulungTikar/web/css/shop-homepage.css</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/transaksiServlet.java</file>
-=======
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/bukaToko.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/editbarangServlet.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/PembeliDA.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Pengguna.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Barang.hbm.xml</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/deletebarangServlet.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Barang.java</file>
-            <file>file:/D:/Git/GulungTikar/web/register.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/css/shop-shoppingcart.css</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/PenggunaDA.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/util/HibernateUtil.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Toko.java</file>
-            <file>file:/D:/Git/GulungTikar/web/nav.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/registerServlet.java</file>
-            <file>file:/D:/Git/GulungTikar/src/java/servlet/editToko.java</file>
-            <file>file:/D:/Git/GulungTikar/web/css/shop-homepage.css</file>
-            <file>file:/D:/Git/GulungTikar/web/editbarang.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/PenjualDA.java</file>
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
             <file>file:/D:/Git/GulungTikar/src/java/servlet/tambahbarangServlet.java</file>
+            <file>file:/D:/Git/GulungTikar/src/java/servlet/TransaksiServlet.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/controller/testDOA.java</file>
             <file>file:/D:/Git/GulungTikar/web/footer.jsp</file>
             <file>file:/D:/Git/GulungTikar/web/login.jsp</file>
             <file>file:/D:/Git/GulungTikar/src/java/controller/AdminDA.java</file>
             <file>file:/D:/Git/GulungTikar/src/java/servlet/loginServlet.java</file>
-<<<<<<< HEAD
+            <file>file:/D:/Git/GulungTikar/src/java/servlet/ShoppingCartServlet.java</file>
             <file>file:/D:/Git/GulungTikar/web/css/userprofile.css</file>
             <file>file:/D:/Git/GulungTikar/src/java/model/Transaksi.hbm.xml</file>
-=======
-            <file>file:/D:/Git/GulungTikar/web/userprofile.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/profiletoko.jsp</file>
-            <file>file:/D:/Git/GulungTikar/web/css/bootstrap.css</file>
-            <file>file:/D:/Git/GulungTikar/web/css/userprofile.css</file>
-            <file>file:/D:/Git/GulungTikar/src/java/model/Etalase.java</file>
-            <file>file:/D:/Git/GulungTikar/web/index.jsp</file>
-            <file>file:/D:/Git/GulungTikar/src/java/controller/TransaksiDA.java</file>
-            <file>file:/D:/Git/GulungTikar/web/css/tobanga.jpg</file>
->>>>>>> 95438e02336337aea16bc64b3d28d504d49b6d35
             <file>file:/D:/Git/GulungTikar/web/shoppingcart.jsp</file>
             <file>file:/D:/Git/GulungTikar/src/java/controller/SystemDA.java</file>
             <file>file:/D:/Git/GulungTikar/web/tambahbarang.jsp</file>
