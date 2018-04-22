@@ -94,6 +94,7 @@ public class registerServlet extends HttpServlet {
             HttpSession session = request.getSession();
                 session.setAttribute("username", temp.getNama());
                 session.setAttribute("idPengguna", temp.getIdPengguna());
+                session.setAttribute("type", temp.getType());
                 session.setAttribute("statusLogin", "1");
                 RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
                 rd.forward(request, response);

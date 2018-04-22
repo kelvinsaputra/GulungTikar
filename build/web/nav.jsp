@@ -81,14 +81,19 @@
 */
                        Pengguna pengguna = new SystemDA().getUserById(idPengguna);
                        if(pengguna.getType().equals("Penjual")){
-                            Toko tokoPenjual = new SystemDA().getToko2(pengguna);
-                            if(tokoPenjual!=null){
                     %>        
                         <li class="nav-item">
                             <a class="nav-link text-white" href="profiletoko.jsp">My Shop</a>
                         </li>  
 
-                            <%}}%>
+                            <%}
+                            else
+                            {%>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="shoppingcart.jsp">Shopping Cart</a>
+                        </li>  
+                        <%
+                            }%>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="logoutServlet">Logout</a>
                         </li>

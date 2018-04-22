@@ -152,6 +152,45 @@ public class SystemDA {
         }
     }
     
+    public Shoppingcart getShoppingcartByID(int idUser)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Shoppingcart where id_pengguna="+idUser);
+        if(q.list().size()>0){
+            Shoppingcart hasil = (Shoppingcart) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
+    public ArrayList<Shoppingcartentry> getShoppingcartentryByID(int idSC)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Shoppingcartentry where id_shoppingcart="+idSC);
+        if(q.list().size()>0){
+            ArrayList<Shoppingcartentry> hasil = (ArrayList<Shoppingcartentry>) q.list();
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
+    public ArrayList<Wishlistentry> getWishlistentryByID(int idW)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Wishlistentry where ID_wishlist="+idW);
+        if(q.list().size()>0){
+            ArrayList<Wishlistentry> hasil = (ArrayList<Wishlistentry>) q.list();
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
 //    public ArrayList<Barang> getBarang(int x) {
 //        s.beginTransaction();
 //        Query query = s.createQuery("select from Barang where id_barang=" + x);
@@ -263,9 +302,29 @@ public class SystemDA {
         s.getTransaction().commit();
     }
 
-    public boolean insertShoppingcart(Shoppingcart m) {
+    public int insertShoppingcart(Shoppingcart m) {
         Session session = factory.openSession();
         ArrayList<Shoppingcart> hasil = null;
+        Transaction tx = session.beginTransaction();
+        int a = (Integer) session.save(m);
+        tx.commit();
+        session.close();
+        return a;
+    }
+    
+    public boolean insertShoppingcartentry(Shoppingcartentry m) { //inisialisasi pas user buat, bisa otomatis panggil insertToko kalo user register tipe penjual
+        Session session = factory.openSession();
+        ArrayList<Shoppingcartentry> hasil = null;
+        Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(m);
+        tx.commit();
+        session.close();
+        return true;
+    }
+    
+    public boolean insertOrderentry (Orderentry m) { //inisialisasi pas user buat, bisa otomatis panggil insertToko kalo user register tipe penjual
+        Session session = factory.openSession();
+        ArrayList<Orderentry> hasil = null;
         Transaction tx = session.beginTransaction();
         session.saveOrUpdate(m);
         tx.commit();
@@ -282,9 +341,9 @@ public class SystemDA {
         return hasil;
     }
 
-    public void deleteShoppingcartentry(int idBarang, int idPengguna) {
+    public void deleteShoppingcartentry(int idBarang,int idShopping) {
         s.beginTransaction();
-        Query query = s.createQuery("delete from Shoppingcartentry where id_barang=" + idBarang + " and id_shoppingcart in (select id_shoppingcart from shoppingcart where id_pengguna =" + idPengguna + ")"); //disini many to many jd deletenya di etalase pengguna siapa jg masuk
+        Query query = s.createQuery("delete from Shoppingcartentry where ID_Barang="+idBarang+"AND ID_Shoppingcart="+idShopping); 
         int exec = query.executeUpdate();
         s.getTransaction().commit();
     }
@@ -329,10 +388,10 @@ public class SystemDA {
     }
     
     
-    public Toko getToko2(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+    public Toko getToko2(Pengguna p) { 
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        Query q = session.createQuery("from Toko where id_pengguna="+p.getIdPengguna());
+        Query q = session.createQuery("from Toko where ID_pengguna="+p.getIdPengguna());
         if(q.list().size()>0){
             Toko hasil = (Toko) q.list().get(0);
             return hasil;
@@ -341,10 +400,22 @@ public class SystemDA {
         }
     }
     
-    public Wishlist getWishlist(Pengguna p) { //tombol buuat toko , buat shopping cart dsb buat inisialisasi awal
+    public Toko getTokoByIdPengguna(int idPengguna) { 
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        Query q = session.createQuery("from Wishlist where id_pengguna="+p.getIdPengguna());
+        Query q = session.createQuery("from Toko where ID_pengguna="+idPengguna);
+        if(q.list().size()>0){
+            Toko hasil = (Toko) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
+    public Wishlist getWishlist(int id) { 
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Wishlist where ID_pengguna="+id);
         if(q.list().size()>0){
             Wishlist hasil = (Wishlist) q.list().get(0);
             return hasil;
@@ -388,6 +459,16 @@ public class SystemDA {
         hasil = (ArrayList<Transaksi>) q.list();
         return hasil;
     }
+    
+    public ArrayList<Transaksi> getTransaksiByIdPengguna(int idPengguna)
+    {
+        Session session = factory.openSession();
+        ArrayList<Transaksi> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Transaksi where ID_pengguna="+idPengguna);
+        hasil = (ArrayList<Transaksi>) q.list();
+        return hasil;
+    }
 
     public void deleteTransaksi(int idTransaksi, int idPengguna) {
         s.beginTransaction();
@@ -405,12 +486,24 @@ public class SystemDA {
 
     public boolean insertTransaksi(Transaksi m) {
         Session session = factory.openSession();
-        ArrayList<Transaksi> hasil = null;
         Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(m);
+        session.save(m);
         tx.commit();
         session.close();
         return true;
+    }
+    
+    public Transaksi getTransaksibyUserId(int idPengguna)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Transaksi where id_pengguna="+idPengguna);
+        if(q.list().size()>0){
+            Transaksi hasil = (Transaksi) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
     }
 
 //    public ArrayList<Transaksi> getTransaksi() {
@@ -447,6 +540,8 @@ public class SystemDA {
         session.close();
         return a;
     }    
+    
+    
 
 //    public ArrayList<Wishlist> getWishlist() {
 //        Session session = factory.openSession();
@@ -469,9 +564,9 @@ public class SystemDA {
         }
     }
     
-    public void deleteWishlistentry(int idPengguna, int idBarang) {
+    public void deleteWishlistentry(int idWishlist, int idBarang) {
         s.beginTransaction();
-        Query query = s.createQuery("delete from Wishlistentry where id_barang=" + idBarang + "and id_wishlist in (select id_wishlist from wishlist where id_pengguna=" + idPengguna+")");
+        Query query = s.createQuery("delete from Wishlistentry where ID_barang="+idBarang+"AND ID_wishlist="+idWishlist);
         int exec = query.executeUpdate();
         s.getTransaction().commit();
     }

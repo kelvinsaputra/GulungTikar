@@ -5,27 +5,27 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
-//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Random;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Pengguna;
-import model.Session;
+import model.Transaksi;
 
 /**
  *
- * @author Ryou
+ * @author LENOVO
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "TransaksiServlet", urlPatterns = {"/TransaksiServlet"})
+public class transaksiServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +44,10 @@ public class loginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
+            out.println("<title>Servlet TransaksiServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TransaksiServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,28 +79,34 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Pengguna temp = new Pengguna();
-        Pengguna pengguna = new Pengguna();
-        SystemDA SDA = new SystemDA();
-        PenggunaDA PDA = new PenggunaDA();
-        Boolean login=false;
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        pengguna = PDA.login(temp);
-        if(pengguna!=null)
-        {
-           HttpSession session = request.getSession();
-                session.setAttribute("username", pengguna.getNama());
-                session.setAttribute("idPengguna", pengguna.getIdPengguna());
-                session.setAttribute("type",pengguna.getType());
-                session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
-            } else {
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("index.jsp");
-                rd.forward(request, response);
-            }
+        SystemDA da = new SystemDA();
+        int idSc = Integer.parseInt(request.getParameter("idSc"));
+        int idPengguna = Integer.parseInt(request.getParameter("idPengguna"));
+        String alamat = request.getParameter("alamat");
+        String catatan = request.getParameter("catatan");
+        Pengguna pengguna = da.getUserById(idPengguna);
+        Transaksi transaksi = new Transaksi();
+        Random rand = new Random();
+
+    // nextInt is normally exclusive of the top value,
+    // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((100000 - 1) + 1) + 1;
+        transaksi.setIdTransaksi(randomNum);
+        transaksi.setPengguna(pengguna);
+        transaksi.setTanggal(new Date());
+        transaksi.setCatatan(catatan);
+        transaksi.setKurir("J&T");
+        transaksi.setStatus("Sedang dikirim");
+        transaksi.setAlamatPengiriman(alamat);
+        
+        da.insertTransaksi(transaksi);
+        
+        RequestDispatcher rd=request.getRequestDispatcher("/orderEntryServlet");
+            request.setAttribute("idSc", idSc);
+            request.setAttribute("idTransaksi",transaksi);
+            request.setAttribute("idPengguna", idPengguna);
+        rd.forward(request, response);
+        
     }
 
     /**

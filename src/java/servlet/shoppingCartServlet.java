@@ -5,27 +5,29 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
-//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Pengguna;
-import model.Session;
+import model.Shoppingcart;
+import model.Shoppingcartentry;
+import model.ShoppingcartentryId;
+
 
 /**
  *
- * @author Ryou
+ * @author LENOVO
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "ShoppingCartServlet", urlPatterns = {"/ShoppingCartServlet"})
+public class shoppingCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +46,10 @@ public class loginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
+            out.println("<title>Servlet ShoppingCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,28 +81,59 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Pengguna temp = new Pengguna();
+                SystemDA da = new SystemDA();
+        Shoppingcartentry temp = new Shoppingcartentry();
+        int idBarang = Integer.parseInt(request.getParameter("idBarang"));
+        int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+        int qty = Integer.parseInt(request.getParameter("qty"));
+        if(qty>=1){
+            ArrayList<Pengguna> temppengguna = new ArrayList<Pengguna>();
+        temppengguna = da.getAllUser();
         Pengguna pengguna = new Pengguna();
-        SystemDA SDA = new SystemDA();
-        PenggunaDA PDA = new PenggunaDA();
-        Boolean login=false;
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        pengguna = PDA.login(temp);
-        if(pengguna!=null)
-        {
-           HttpSession session = request.getSession();
-                session.setAttribute("username", pengguna.getNama());
-                session.setAttribute("idPengguna", pengguna.getIdPengguna());
-                session.setAttribute("type",pengguna.getType());
-                session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
-            } else {
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("index.jsp");
-                rd.forward(request, response);
+
+        for (int i = 0; i < temppengguna.size(); i++) {
+            if (temppengguna.get(i).getIdPengguna() == idPengguna) {
+                pengguna = temppengguna.get(i);
             }
+        }
+
+        boolean udahPunyaList = false;
+        ArrayList<Shoppingcart> tempsc = new ArrayList<Shoppingcart>();
+        tempsc = da.getAllShoppingcart();
+        ShoppingcartentryId sid = new ShoppingcartentryId();
+
+        if (tempsc != null) {
+            for (int i = 0; i < tempsc.size(); i++) {
+                if (tempsc.get(i).getPengguna().getIdPengguna() == idPengguna) {
+                    udahPunyaList = true;
+                }
+            }
+
+            if (udahPunyaList == false) {
+                Shoppingcart newSc = new Shoppingcart();
+                newSc.setPengguna(pengguna);
+                sid.setIdShoppingcart(da.insertShoppingcart(newSc));
+            } else {
+                ArrayList<Shoppingcart> scart = new ArrayList<Shoppingcart>();
+                scart = da.getAllShoppingcart();
+
+                for (int i = 0; i < scart.size(); i++) {
+                    if (scart.get(i).getPengguna().getIdPengguna() == idPengguna) {//comment hbmxml user ke wish, tetep wish ke user
+                        sid.setIdShoppingcart(scart.get(i).getIdShoppingcart());
+                    }
+                }
+            }
+
+            sid.setIdBarang(idBarang);
+            temp.setId(sid);
+            temp.setQty(qty);
+
+            da.insertShoppingcartentry(temp);
+        }   
+            RequestDispatcher rd
+                            = request.getRequestDispatcher("shoppingcart.jsp");
+                    rd.forward(request, response);
+        }
     }
 
     /**

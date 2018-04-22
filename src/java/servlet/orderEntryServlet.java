@@ -5,27 +5,31 @@
  */
 package servlet;
 
-import controller.PenggunaDA;
-//import controller.Session;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Pengguna;
-import model.Session;
+import model.Barang;
+import model.Etalase;
+import model.Orderentry;
+import model.OrderentryId;
+import model.Shoppingcart;
+import model.Shoppingcartentry;
+import model.Transaksi;
 
 /**
  *
  * @author Ryou
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "orderEntryServlet", urlPatterns = {"/orderEntryServlet"})
+public class orderEntryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,19 +42,7 @@ public class loginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,7 +57,7 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+   
     }
 
     /**
@@ -79,28 +71,40 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Pengguna temp = new Pengguna();
-        Pengguna pengguna = new Pengguna();
-        SystemDA SDA = new SystemDA();
-        PenggunaDA PDA = new PenggunaDA();
-        Boolean login=false;
-        temp.setEmail(request.getParameter("email"));
-        temp.setPassword(SDA.MD5(request.getParameter("password")));
-        pengguna = PDA.login(temp);
-        if(pengguna!=null)
-        {
-           HttpSession session = request.getSession();
-                session.setAttribute("username", pengguna.getNama());
-                session.setAttribute("idPengguna", pengguna.getIdPengguna());
-                session.setAttribute("type",pengguna.getType());
-                session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
-            } else {
-                RequestDispatcher rd
-                        = request.getRequestDispatcher("index.jsp");
-                rd.forward(request, response);
-            }
+        SystemDA da = new SystemDA();        
+       int idSc = Integer.parseInt(request.getParameter("idSc"));
+       int idPengguna = Integer.parseInt(request.getParameter("idPengguna"));
+       Transaksi transaksi = (Transaksi) request.getAttribute("idTransaksi");
+       Shoppingcart shoppingcart = da.getShoppingcartByID(idPengguna);
+       ArrayList<Shoppingcartentry> sce = da.getShoppingcartentryByID(shoppingcart.getIdShoppingcart());
+       RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+       Orderentry orderentry = new Orderentry();
+       
+       for(int i=0;i<sce.size();i++)
+       {
+           Barang barang = sce.get(i).getBarang();
+           OrderentryId id = new OrderentryId();
+           id.setIdBarang(barang.getIdBarang());
+           id.setIdTransaksi(transaksi.getIdTransaksi());
+           orderentry.setId(id);
+           orderentry.setQty(sce.get(i).getQty());
+           da.insertOrderentry(orderentry);
+           da.deleteShoppingcartentry(barang.getIdBarang(),shoppingcart.getIdShoppingcart());
+          
+//           ArrayList<Etalase> listEtalase = new ArrayList();
+//           listEtalase.addAll(barang.getEtalases());
+//           int idPenjual = listEtalase.get(0).getToko().getPengguna().getIdPengguna();
+//           ArrayList<Transaksi> transaksiPenjual = da.getTransaksiByIdPengguna(idPenjual);
+//           if(transaksiPenjual.size()==0)
+//           {
+//               System.out.println("IDPenjual"+idPenjual);
+//               transaksi.setIdTransaksi(transaksi.getIdTransaksi());
+//               transaksi.getPengguna().setIdPengguna(idPenjual);
+//               da.insertTransaksi(transaksi);
+//           }
+       }
+       da.deleteShoppingcart(idPengguna);
+       rd.forward(request, response);
     }
 
     /**

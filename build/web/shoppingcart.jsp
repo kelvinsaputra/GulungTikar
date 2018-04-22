@@ -4,6 +4,11 @@
     Author     : LENOVO
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Shoppingcartentry"%>
+<%@page import="model.Shoppingcart"%>
+<%@page import="model.Barang"%>
+<%@page import="controller.SystemDA"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,6 +23,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="vendor/bootstrap/css/product-detail.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="js/bootstrap.min.js"></script>
@@ -31,6 +37,23 @@
 
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
+    <center><h1>Shopping Cart</h1></center>
+    <hr>
+        <%
+
+            SystemDA da = new SystemDA();            
+            Shoppingcart shoppingcart = new Shoppingcart();
+            int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+            shoppingcart = da.getShoppingcartByID(idPengguna);
+            ArrayList<Shoppingcartentry> shoppingCartE = da.getShoppingcartentryByID(shoppingcart.getIdShoppingcart());
+            if(shoppingCartE!=null)
+            {
+            if(shoppingcart!=null&&shoppingCartE.size()!=0)
+            {
+            ArrayList<Shoppingcartentry> sce = da.getShoppingcartentryByID(shoppingcart.getIdShoppingcart());
+            if(sce.size()!=0)
+            {
+        %>
 
         <!-- Page Content -->
         <div class="container" style="padding: 5%">
@@ -45,42 +68,60 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%
+                        for (int i = 0; i < sce.size(); i++) {
+                    %>
                     <tr>
                         <td data-th="Product">
                             <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+                                <div class="col-sm-2 hidden-xs"><img class="tab-pane" src="res/<%= sce.get(i).getBarang().getIdBarang()%>.jpg" alt="..." class="img-responsive"/></div>
                                 <div class="col-sm-10" style="padding-left: 10%;">
-                                    <h4 class="nomargin">Product 1</h4>
+                                    <h4 class="nomargin"><%= sce.get(i).getBarang().getNamaBarang() %></h4>
                                     <p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">$1.99</td>
+                        <td data-th="Price">Rp. <%= sce.get(i).getBarang().getHargaBarang() %></td>
                         <td data-th="Quantity">
-                            <input type="number" class="form-control text-center" value="1" min="0">
+                            <input type="number" class="form-control text-center" value='<%= sce.get(i).getQty() %>' min="0">
                         </td>
-                        <td data-th="Subtotal" class="text-center">1.99</td>
+                        
+                        <td data-th="Subtotal" class="text-center"></td>
                         <td class="actions" data-th="">
-                            <button class="btn btn-danger btn-sm">Delete</button>								
+                            <form action="deleteShoppingCartEntry" method="POST">
+                                <input type="hidden" name="idBarang" class="form-control" value="<%=sce.get(i).getBarang().getIdBarang()%>">
+                                <input type="hidden" name="idPengguna" class="form-control" value="<%=idPengguna%>">
+                                <button class="btn btn-danger btn-sm">Delete</button>								
+                            </form>
                         </td>
                     </tr>
+                    <% } %>
                 </tbody>
                 <tfoot>
-                    <tr class="visible-xs">
-                        <td class="text-center"><strong>Total 1.99</strong></td>
-                    </tr>
                     <tr>
                         <td><a href="index.jsp" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                         <td colspan="2" class="hidden-xs"></td>
-                        <td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-                        <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                        <td class="hidden-xs text-center"><strong></strong></td>
+                        <td>
+                            <form action="transaksi.jsp?idSc=<%=shoppingcart.getIdShoppingcart()%>" method="post">
+                                <button class="btn btn-success btn-sm">Checkout</button>
+                            </form>
+                        </td>
                     </tr>
-                </tfoot>
+                     </tfoot>
             </table>
+                    <% }
+            }
+            }else
+            {%>
+            <center><img class="d-block img-fluid" src="res/empty_cart.jpeg" alt="empty cart"></center>
+
+            <%}%>
+               
         </div>
         <br>
 
-        <jsp:include  page="footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

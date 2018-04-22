@@ -85,9 +85,22 @@
         %>
         <!-- Page Content -->
         <div class="tab">
-            <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'editprofile')">Edit Profile</button>
-            <button class="tablinks" onclick="openCity(event, 'manageshop')">Manage Shop</button>
-            <button class="tablinks" onclick="openCity(event, '')">Transaction History</button>
+            <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'editprofile')">Profile</button>
+            <%
+                if(request.getSession(false).getAttribute("type").equals("Penjual"))
+                {
+                    
+                %>
+            <button id="manageshop" class="tablinks" onclick="openTab(event, 'manageshop')">Manage Shop</button>
+            <%
+                }
+                else
+                {%>
+            <button id="wishlist" class="tablinks" onclick="openTab(event, 'manageshop')">Wishlist</button>
+                <%
+                }
+                %>
+            <button id="history" class="tablinks" onclick="openTab(event, '')">Transaction History</button>
         </div>
         <div id="London" class="tabcontent">
             <h3>London</h3>
@@ -165,46 +178,20 @@
 
         <div id="manageshop" class="tabcontent">
             <div  class="container" style="padding-top: 5%">
+                <center><h1>Wishlist</h1></center><hr>
                 <div class="row">               
-                    <%
-
-                        if (temp.getType().equals("Penjual")) {
-                            Toko toko = da.getToko2(temp);
-                            if (toko == null) {
-                    %>
-                    <div class="col-md-12">
-                        <h2>You don't have a shop yet! Make your first shop by entering its address</h2>
-                        <form action="bukaToko" method="post" class="">
-                            <center><div class="form-group">
-                                    <input type="text" class="form-control col-4" name="alamat" placeholder="Shop Address">
-                                </div>
-                                <div class="form-group mx-auto">
-                                    <button class="btn btn-primary col-4" type="submit"> Create Shop </button>
-                                </div></center>
-                        </form>
-                    </div>
-                    <%
-                    } else {
-                    %>
-                    <div class="col-12">
-                        <hr>
-                        <center><h2>Manage Shop</h2></center>
-                            <jsp:include page="profiletoko.jsp"/>
-                    </div>
-                    <%
-                        }
-                    } else if (temp.getType().equals("Pembeli")) {
-
-                        Wishlist wishlist = da.getWishlist(temp);
-                        if (wishlist != null) {
-
+                    <%if (temp.getType().equals("Pembeli")) {
+                        Wishlist wishlist = da.getWishlist(temp.getIdPengguna());
+                        ArrayList<Wishlistentry> wishlistE = da.getWishlistentryByID(wishlist.getIdWishlist());
+                        if(wishlistE!=null)
+                        {
+                        if (wishlist != null&&wishlistE.size()!=0) {
                             int idWish = wishlist.getIdWishlist();
                             ArrayList<Wishlistentry> wlentry = new ArrayList<Wishlistentry>();
                             wlentry = da.getAllWishlistentry(idWish);
                             ArrayList<Barang> tempbarang = new ArrayList<Barang>();
                             tempbarang = da.getAllBarang();
                             for (int i = 0; i < wlentry.size(); i++) {
-
                                 for (int j = 0; j < tempbarang.size(); j++) {
                                     if (wlentry.get(i).getBarang().getIdBarang() == tempbarang.get(j).getIdBarang()) {
                     %>
@@ -225,7 +212,11 @@
                                     <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                    <form action="removeWishlistServlet" method="POST">
+                                        <button class="btn btn-primary" style="margin-left: 220px" type="submit">Remove</button>
+                                        <input type="hidden" name="idBarang" class="form-control" value="<%=tempbarang.get(j).getIdBarang()%>">
+                                        <input type="hidden" name="idPengguna" class="form-control" value="<%=temp.getIdPengguna()%>">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -233,14 +224,21 @@
                                         }
                                     }
                                 }
-                            }
-//                    <!--check wishlist size, keluarin button/tulisan u dont have any, your last shopping cart-->    
 
+                            }
+}
+else
+{
+%> <center><img class="" src="res/wishlist-empty.jpg" alt="empty cart"></center> 
+<%
+}
+//                    <!--check wishlist size, keluarin button/tulisan u dont have any, your last shopping cart-->    
                         }
                     %>
                 </div>
-            </div>
-        </div>
+</div>
+                
+        
 
         <br>
 
@@ -251,7 +249,7 @@
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <script type="text/javascript">
-                function openCity(evt, tabName) {
+                function openTab(evt, tabName) {
                     // Declare all variables
                     var i, tabcontent, tablinks;
 
@@ -272,7 +270,7 @@
                     evt.currentTarget.className += " active";
 
                 }
-                document.getElementById("defaultOpen").click();
+                    document.getElementById("defaultOpen").click();
         </script>
     </body>
 </html>
