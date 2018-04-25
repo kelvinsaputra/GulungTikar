@@ -85,7 +85,8 @@ public class orderEntryServlets extends HttpServlet {
         ArrayList<Shoppingcartentry> temp = new ArrayList<>();
         temp = da.getShoppingcartentryByID(idSc);
         OrderentryId id = new OrderentryId();
-        Transaksi transaksi = da.getTransaksibyUserId(idPengguna);
+        
+        Transaksi transaksi = da.getTransaksibyUserIdDesc(idPengguna);
         for(int i=0; i<temp.size(); i++){
             Orderentry newOrder = new Orderentry();
             id.setIdBarang(temp.get(i).getBarang().getIdBarang());

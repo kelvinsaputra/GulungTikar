@@ -131,7 +131,7 @@ public class ShoppingCartServlet extends HttpServlet {
             da.insertShoppingcartentry(temp);
         }   
             RequestDispatcher rd
-                            = request.getRequestDispatcher("userprofile.jsp");
+                            = request.getRequestDispatcher("shoppingcart.jsp");
                     rd.forward(request, response);
         }
     }

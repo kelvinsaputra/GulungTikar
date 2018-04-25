@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Pengguna;
+import model.Wishlist;
+import model.Shoppingcart;
 
 /**
  *
@@ -81,6 +84,7 @@ public class registerServlet extends HttpServlet {
             throws ServletException, IOException {
         SystemDA SDA = new SystemDA();
         Pengguna temp = new Pengguna();
+        
         temp.setNama(request.getParameter("name"));
         temp.setType(request.getParameter("type"));
         temp.setEmail(request.getParameter("email"));
@@ -88,6 +92,7 @@ public class registerServlet extends HttpServlet {
         temp.setAlamatRumah(request.getParameter("address"));
         temp.setNoRekening(Integer.parseInt(request.getParameter("norekening")));
         temp.setSaldo(0);
+        
         PenggunaDA da = new PenggunaDA();
         if(da.register(temp))
         {

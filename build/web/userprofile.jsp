@@ -13,14 +13,12 @@
 <!DOCTYPE html>
 <html>
     <style>
-
         /* Style the tab */
         .tab {
             overflow: hidden;
             border: 1px solid #ccc;
             background-color: #f1f1f1;
         }
-
         /* Style the buttons inside the tab */
         .tab button {
             background-color: inherit;
@@ -32,17 +30,14 @@
             transition: 0.3s;
             font-size: 17px;
         }
-
         /* Change background color of buttons on hover */
         .tab button:hover {
             background-color: #ddd;
         }
-
         /* Create an active/current tablink class */
         .tab button.active {
             background-color: #ccc;
         }
-
         /* Style the tab content */
         .tabcontent {
             display: none;
@@ -50,7 +45,6 @@
             border: 1px solid #ccc;
             border-top: none;
         }
-
     </style>
 
 
@@ -79,28 +73,27 @@
         <jsp:include page="nav.jsp"/>
         <%
             System.out.print((String) request.getSession(false).getAttribute("username"));
+            System.out.println(request.getSession(false).getAttribute("type"));
 //            SystemDA SDA = new SystemDA();
 //            ArrayList<Pengguna> pengguna = SDA.getUserByID(Integer.parseInt(request.getParameter("id")));
-
         %>
         <!-- Page Content -->
         <div class="tab">
-
-            
+            <%if(!request.getSession(false).getAttribute("type").equals("Admin")){%>
             <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'editprofile')">Edit Profile</button>
             <%
-                if(request.getSession(false).getAttribute("type").equals("Penjual")){
+                if (request.getSession(false).getAttribute("type").equals("Penjual")) {
             %>
             <button class="tablinks" onclick="openTab(event, 'manageshop')">Manage Shop</button>
             <%
-                }
-                else
-                {%>
+                } else {
+            %>
             <button id="wishlist" class="tablinks" onclick="openTab(event, 'manageshop')">Wishlist</button>
-                <%
+            <a href="history.jsp"><button id="history" class="tablinks" onclick="openTab(event, 'history')">Transaction History</button></a>
+            <%
                 }
-                %>
-            <button id="history" class="tablinks" onclick="openTab(event, '')">Transaction History</button>
+            }   
+            %>
         </div>
 
 
@@ -130,8 +123,6 @@
                                         temp = temppengguna.get(i);
                                     }
                                 }
-
-
                             %>
                             Email : <%=temp.getEmail()%>
                             Rekening : <%=temp.getNoRekening()%>
@@ -167,63 +158,60 @@
                 <center><h1>Wishlist</h1></center><hr>
                 <div class="row">               
                     <%if (temp.getType().equals("Pembeli")) {
-                        Wishlist wishlist = da.getWishlist(temp.getIdPengguna());
-                        ArrayList<Wishlistentry> wishlistE = da.getWishlistentryByID(wishlist.getIdWishlist());
-                        if(wishlistE!=null)
-                        {
-                        if (wishlist != null&&wishlistE.size()!=0) {
-                            int idWish = wishlist.getIdWishlist();
-                            ArrayList<Wishlistentry> wlentry = new ArrayList<Wishlistentry>();
-                            wlentry = da.getAllWishlistentry(idWish);
-                            ArrayList<Barang> tempbarang = new ArrayList<Barang>();
-                            tempbarang = da.getAllBarang();
-                            for (int i = 0; i < wlentry.size(); i++) {
-                                for (int j = 0; j < tempbarang.size(); j++) {
-                                    if (wlentry.get(i).getBarang().getIdBarang() == tempbarang.get(j).getIdBarang()) {
+                            Wishlist wishlist = da.getWishlist(temp.getIdPengguna());
+                            ArrayList<Wishlistentry> wishlistE = da.getWishlistentryByID(wishlist.getIdWishlist());
+                            if (wishlistE != null) {
+                                if (wishlist != null && wishlistE.size() != 0) {
+                                    int idWish = wishlist.getIdWishlist();
+                                    ArrayList<Wishlistentry> wlentry = new ArrayList<Wishlistentry>();
+                                    wlentry = da.getAllWishlistentry(idWish);
+                                    ArrayList<Barang> tempbarang = new ArrayList<Barang>();
+                                    tempbarang = da.getAllBarang();
+                                    for (int i = 0; i < wlentry.size(); i++) {
+                                        for (int j = 0; j < tempbarang.size(); j++) {
+                                            if (wlentry.get(i).getBarang().getIdBarang() == tempbarang.get(j).getIdBarang()) {
                     %>
-                    
+
                     <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="barang.jsp?idBarang=<%=tempbarang.get(j).getIdBarang()%>"><img class="card-img-top" src="res/<%= tempbarang.get(j).getIdBarang()%>.jpg" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="barang.jsp?idBarang=<%=tempbarang.get(j).getIdBarang()%>"><%= tempbarang.get(j).getNamaBarang()%></a>
-                                    </h4>
-                                    <h5>Rp. <%= tempbarang.get(j).getHargaBarang()%>,00</h5>
-                                    <%
-                                        Etalase etalase = da.getEtalaseByID(tempbarang.get(j).getIdBarang());
-                                        Toko tokoo = etalase.getToko();
-                                        Pengguna pengguna = tokoo.getPengguna();
-                                    %>
-                                    <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
-                                </div>
-                                <div class="card-footer">
-                                    <form action="removeWishlistServlet" method="POST">
-                                        <button class="btn btn-primary" style="margin-left: 220px" type="submit">Remove</button>
-                                        <input type="hidden" name="idBarang" class="form-control" value="<%=tempbarang.get(j).getIdBarang()%>">
-                                        <input type="hidden" name="idPengguna" class="form-control" value="<%=temp.getIdPengguna()%>">
-                                    </form>
-                                </div>
+                        <div class="card h-100">
+                            <a href="barang.jsp?idBarang=<%=tempbarang.get(j).getIdBarang()%>"><img class="card-img-top" src="res/<%= tempbarang.get(j).getIdBarang()%>.jpg" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="barang.jsp?idBarang=<%=tempbarang.get(j).getIdBarang()%>"><%= tempbarang.get(j).getNamaBarang()%></a>
+                                </h4>
+                                <h5>Rp. <%= tempbarang.get(j).getHargaBarang()%>,00</h5>
+                                <%
+                                    Etalase etalase = da.getEtalaseByID(tempbarang.get(j).getIdBarang());
+                                    Toko tokoo = etalase.getToko();
+                                    Pengguna pengguna = tokoo.getPengguna();
+                                %>
+                                <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
+                            </div>
+                            <div class="card-footer">
+                                <form action="removeWishlistServlet" method="POST">
+                                    <button class="btn btn-primary" style="margin-left: 220px" type="submit">Remove</button>
+                                    <input type="hidden" name="idBarang" class="form-control" value="<%=tempbarang.get(j).getIdBarang()%>">
+                                    <input type="hidden" name="idPengguna" class="form-control" value="<%=temp.getIdPengguna()%>">
+                                </form>
                             </div>
                         </div>
-                    <%
-                                        }
-                                    }
+                    </div>
+                </div>
+                <%
                                 }
-
                             }
-}
-else
-{
-%> <center><img class="" src="res/wishlist-empty.jpg" alt="empty cart"></center> 
-<%
-}
-//                    <!--check wishlist size, keluarin button/tulisan u dont have any, your last shopping cart-->    
+                        }
+                    }
+                } else {
+                %> <center><img class="" src="res/wishlist-empty.jpg" alt="empty cart"></center> 
+                    <%
+                            }
+                            //                    <!--check wishlist size, keluarin button/tulisan u dont have any, your last shopping cart-->    
                         }
                     %>
-                </div>
-            </div>
 
+            </div>
+        </div>
 
         <br>
 
@@ -237,25 +225,21 @@ else
                 function openTab(evt, tabName) {
                     // Declare all variables
                     var i, tabcontent, tablinks;
-
                     // Get all elements with class="tabcontent" and hide them
                     tabcontent = document.getElementsByClassName("tabcontent");
                     for (i = 0; i < tabcontent.length; i++) {
                         tabcontent[i].style.display = "none";
                     }
-
                     // Get all elements with class="tablinks" and remove the class "active"
                     tablinks = document.getElementsByClassName("tablinks");
                     for (i = 0; i < tablinks.length; i++) {
                         tablinks[i].className = tablinks[i].className.replace(" active", "");
                     }
-
                     // Show the current tab, and add an "active" class to the button that opened the tab
                     document.getElementById(tabName).style.display = "block";
                     evt.currentTarget.className += " active";
-
                 }
-                    document.getElementById("defaultOpen").click();
+                document.getElementById("defaultOpen").click();
         </script>
     </body>
 </html>

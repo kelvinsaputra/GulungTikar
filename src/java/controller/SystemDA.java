@@ -165,6 +165,19 @@ public class SystemDA {
         }
     }
     
+    public ArrayList<Orderentry> getOrderEntryByID(int idTrx)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Orderentry where id_transaksi="+idTrx);
+        if(q.list().size()>0){
+            ArrayList<Orderentry> hasil = (ArrayList) q.list();
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
     public ArrayList<Shoppingcartentry> getShoppingcartentryByID(int idSC)
     {
         Session session = factory.openSession();
@@ -499,6 +512,19 @@ public class SystemDA {
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Transaksi where id_pengguna="+idPengguna);
+        if(q.list().size()>0){
+            Transaksi hasil = (Transaksi) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
+    public Transaksi getTransaksibyUserIdDesc(int idPengguna)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Transaksi where id_pengguna="+idPengguna+" order by id_transaksi desc");
         if(q.list().size()>0){
             Transaksi hasil = (Transaksi) q.list().get(0);
             return hasil;

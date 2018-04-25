@@ -6,8 +6,12 @@
 package controller;
 
 
+import static controller.SystemDA.factory;
 import java.util.ArrayList;
 import model.Pengguna;
+import model.Shoppingcart;
+import model.Wishlist;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,6 +24,7 @@ import org.hibernate.cfg.Configuration;
 public class PenggunaDA {
     public SessionFactory factory;
     private SystemDA SDA = new SystemDA();
+    Session s = new Configuration().configure().buildSessionFactory().openSession();
     
     public PenggunaDA(){
         try {
@@ -32,6 +37,8 @@ public class PenggunaDA {
     public boolean register(Pengguna p)
     {
         ArrayList<Pengguna> listPengguna = new ArrayList();
+        Wishlist wl = new Wishlist();
+        Shoppingcart sc = new Shoppingcart();
         listPengguna = SDA.getAllUser();
         boolean found = false;
         int i=0;
@@ -62,7 +69,11 @@ public class PenggunaDA {
             System.out.println("User dimasukkan");
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
+            wl.setPengguna(p);
+            sc.setPengguna(p);
             session.save(p);
+            session.save(wl);
+            session.save(sc);
             tx.commit();
             session.close();
             factory.close();
@@ -101,6 +112,13 @@ public class PenggunaDA {
         {
             return null;
         }
+    }
+    
+    public void updateStatus(int idTrx) {
+        s.beginTransaction();
+        Query query = s.createQuery("update Transaksi set status = 'Sudah Diterima' where id_transaksi = " + idTrx);
+        int exec = query.executeUpdate();
+        s.getTransaction().commit();
     }
     
 }

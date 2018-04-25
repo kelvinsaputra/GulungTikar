@@ -118,21 +118,30 @@
                                     }
                             %>
                             <span class="review-no">Tersedia : <%=tersedia%><br></span>
+                            <div>
+                                <form class="form-inline" action='wishlist?idBarang=<%=barang.getIdBarang()%>' method='POST'>
+                                    <div class="form-group">
+                                        <button onclick="addtoWishList()" class="add-to-cart btn btn-default" type="submit" style="background-color: pink; color: red;">add to wishlist</button>
+                                    </div>
+                                </form>
+                            </div>
                             <br><br>
                             <div class="action">
-                                <form action='ShoppingCartServlet?idBarang=<%=barang.getIdBarang()%>' method="post">
-                                    <input type='number' value='1' id="qty" name="qty"/>
-                                    <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
-                                </form>
+                                <div class="col-7">
+                                    <form class="form-inline" action='ShoppingCartServlet?idBarang=<%=barang.getIdBarang()%>' method="post">
+                                        <div class="form-group col-md-4">
+                                            <input class="form-control text-center col-md-12" type='number' value='1' id="qty" name="qty"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 
-                                <form action='wishlist?idBarang=<%=barang.getIdBarang()%>' method='POST'>
-
-                                    <button onclick="addtoWishList()" class="add-to-cart btn btn-default" type="submit" style="background-color: pink; color: red;">add to wishlist</button>
-                                </form>
                                 
                                 <script>
                                 function addtoWishList() {
-                                    alert("Item Inserted to Wishlist");
+                                    alert("Item added to the Wishlist");
                                 }
                                 </script>
 
