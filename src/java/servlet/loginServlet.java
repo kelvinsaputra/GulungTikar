@@ -97,8 +97,14 @@ public class loginServlet extends HttpServlet {
                 session.setAttribute("type", pengguna.getType());
 
                 session.setAttribute("statusLogin", "1");
-                RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
-                rd.forward(request, response);
+                if(pengguna.getType().equals("Admin")){
+                    RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
+                    rd.forward(request, response);
+                }else{
+                    RequestDispatcher rd = request.getRequestDispatcher("userprofile.jsp");
+                    rd.forward(request, response);
+                }
+                
             } else {
                 RequestDispatcher rd
                         = request.getRequestDispatcher("index.jsp");

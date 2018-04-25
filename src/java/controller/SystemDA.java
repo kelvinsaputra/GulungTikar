@@ -471,6 +471,18 @@ public class SystemDA {
         }
     }
     
+    public Toko getTokoById(int idToko) { 
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Toko where ID_toko="+idToko);
+        if(q.list().size()>0){
+            Toko hasil = (Toko) q.list().get(0);
+            return hasil;
+        } else {
+            return null;
+        }
+    }
+    
     public Wishlist getWishlist(int id) { 
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
@@ -515,6 +527,15 @@ public class SystemDA {
         ArrayList<Transaksi> hasil = null;
         Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Transaksi");
+        hasil = (ArrayList<Transaksi>) q.list();
+        return hasil;
+    }
+    
+    public ArrayList<Transaksi> getAllUndoneTransaksi() {
+        Session session = factory.openSession();
+        ArrayList<Transaksi> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Transaksi where status='Sudah Diterima'");
         hasil = (ArrayList<Transaksi>) q.list();
         return hasil;
     }

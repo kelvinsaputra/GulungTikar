@@ -5,30 +5,25 @@
  */
 package servlet;
 
-import controller.SystemDA;
+import controller.PenggunaDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Pengguna;
-import model.Transaksi;
 
 /**
  *
- * @author LENOVO
+ * @author fsury
  */
-@WebServlet(name = "TransaksiServlet", urlPatterns = {"/TransaksiServlet"})
-public class TransaksiServlet extends HttpServlet {
+@WebServlet(name = "konfirmasiServlet", urlPatterns = {"/konfirmasiServlet"})
+public class konfirmasiServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -43,10 +38,10 @@ public class TransaksiServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TransaksiServlet</title>");            
+            out.println("<title>Servlet konfirmasiServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TransaksiServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet konfirmasiServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +59,16 @@ public class TransaksiServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request,response);
+        int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
+        int idTrx = Integer.parseInt(request.getParameter("idTrx"));
+        System.out.println(idPengguna);
+        System.out.println(idTrx);
+
+        new PenggunaDA().updateStatus(idTrx);
+        RequestDispatcher rd
+                = request.getRequestDispatcher("history.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -78,27 +82,7 @@ public class TransaksiServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SystemDA da = new SystemDA();
-        int idSc = Integer.parseInt(request.getParameter("idSc"));
-        int idPengguna = Integer.parseInt(request.getParameter("idPengguna"));
-        String alamat = request.getParameter("alamat");
-        String catatan = request.getParameter("catatan");
-        Pengguna pengguna = da.getUserById(idPengguna);
-        Transaksi transaksi = new Transaksi();
-        transaksi.setPengguna(pengguna);
-        transaksi.setTanggal(new Date());
-        transaksi.setCatatan(catatan);
-        transaksi.setKurir("J&T");
-        transaksi.setStatus("Sedang dikirim");
-        transaksi.setAlamatPengiriman(alamat);
-        
-        da.insertTransaksi(transaksi);
-        
-        RequestDispatcher rd=request.getRequestDispatcher("/orderEntryServlets");
-        request.setAttribute("idSc", idSc);
-        request.setAttribute("idPengguna", idPengguna);
-        rd.forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**

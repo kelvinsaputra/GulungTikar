@@ -1,14 +1,12 @@
 <%-- 
-    Document   : shoppingcart
-    Created on : Mar 6, 2018, 12:31:20 PM
-    Author     : fsury
+    Document   : admin
+    Created on : Apr 25, 2018, 4:32:59 PM
+    Author     : LENOVO
 --%>
 
 <%@page import="model.Orderentry"%>
 <%@page import="model.Transaksi"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Shoppingcartentry"%>
-<%@page import="model.Shoppingcart"%>
 <%@page import="model.Barang"%>
 <%@page import="controller.SystemDA"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,14 +41,13 @@
         <hr>
         <%
             int total = 0;
-            int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
-            ArrayList<Transaksi> trx = new SystemDA().getTransaksiByIdPengguna(idPengguna);
+            ArrayList<Transaksi> trx = new SystemDA().getAllUndoneTransaksi();
         %>
 
         <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <h1>Transaction History</h1>
+                <h1>Forward Payment</h1>
                 <% for (int i = 0; i < trx.size(); i++) {
                         ArrayList<Orderentry> order = new SystemDA().getOrderEntryByID(trx.get(i).getIdTransaksi());
                         System.out.print("=====================================" + order.size());
@@ -109,21 +106,16 @@
                                             <td><h4>Status:</h4></td>
                                             <td><%= trx.get(i).getStatus()%> </td>
                                             <td>
-                                                <%if(!trx.get(i).getStatus().equalsIgnoreCase("sudah diterima") && !trx.get(i).getStatus().equalsIgnoreCase("Sukses")){ %>
-                                                <form action="konfirmasiServlet" method="GET">
-                                                    <input class="btn btn-outline-success" type="submit" value="Konfirmasi Penerimaan">
+                                                <form action="ForwardPaymentServlet" method="POST">
+                                                    <input class="btn btn-outline-success" type="submit" value="Lanjutkan Pembayaran">
                                                     <input type="hidden" name="idTrx" value="<%= trx.get(i).getIdTransaksi() %>"/>
                                                 </form>
-                                                <%} total=0;%>
                                             </td>
 
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">last updated: <%= trx.get(i).getTanggal() %></small>
                         </div>
                     </div>
                 </div>

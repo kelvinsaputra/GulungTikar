@@ -5,29 +5,28 @@
  */
 package servlet;
 
+import controller.AdminDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Etalase;
+import model.Orderentry;
 import model.Pengguna;
-import model.Shoppingcart;
-import model.Shoppingcartentry;
-import model.ShoppingcartentryId;
-
+import model.Toko;
 
 /**
  *
  * @author LENOVO
  */
-@WebServlet(name = "ShoppingCartServlet", urlPatterns = {"/ShoppingCartServlet"})
-public class ShoppingCartServlet extends HttpServlet {
+@WebServlet(name = "ForwardPaymentServlet", urlPatterns = {"/ForwardPaymentServlet"})
+public class ForwardPaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +45,10 @@ public class ShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShoppingCartServlet</title>");            
+            out.println("<title>Servlet ForwardPaymentServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForwardPaymentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -81,59 +80,28 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                SystemDA da = new SystemDA();
-        Shoppingcartentry temp = new Shoppingcartentry();
-        int idBarang = Integer.parseInt(request.getParameter("idBarang"));
         int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
-        int qty = Integer.parseInt(request.getParameter("qty"));
-        if(qty>=1){
-            ArrayList<Pengguna> temppengguna = new ArrayList<Pengguna>();
-        temppengguna = da.getAllUser();
-        Pengguna pengguna = new Pengguna();
-
-        for (int i = 0; i < temppengguna.size(); i++) {
-            if (temppengguna.get(i).getIdPengguna() == idPengguna) {
-                pengguna = temppengguna.get(i);
-            }
+        int idTrx = Integer.parseInt(request.getParameter("idTrx"));
+        
+        AdminDA ada = new AdminDA();
+        ada.updateStatus(idTrx);
+        
+        SystemDA da = new SystemDA(); 
+        ArrayList<Orderentry> oe = da.getOrderEntryByID(idTrx);
+        for(int i=0; i<oe.size(); i++){
+            String harga = (String) oe.get(i).getBarang().getHargaBarang();
+            int hargaBarang = Integer.parseInt(harga);
+            Etalase et = da.getEtalaseByID(oe.get(i).getBarang().getIdBarang());
+            int idToko = et.getToko().getIdToko();
+            Toko toko = da.getTokoById(idToko);
+            Pengguna penjual = toko.getPengguna();
+            int saldo = penjual.getSaldo() + hargaBarang;
+            ada.updateSaldo(penjual.getIdPengguna(), saldo);
         }
-
-        boolean udahPunyaList = false;
-        ArrayList<Shoppingcart> tempsc = new ArrayList<Shoppingcart>();
-        tempsc = da.getAllShoppingcart();
-        ShoppingcartentryId sid = new ShoppingcartentryId();
-
-        if (tempsc != null) {
-            for (int i = 0; i < tempsc.size(); i++) {
-                if (tempsc.get(i).getPengguna().getIdPengguna() == idPengguna) {
-                    udahPunyaList = true;
-                }
-            }
-
-            if (udahPunyaList == false) {
-                Shoppingcart newSc = new Shoppingcart();
-                newSc.setPengguna(pengguna);
-                sid.setIdShoppingcart(da.insertShoppingcart(newSc));
-            } else {
-                ArrayList<Shoppingcart> scart = new ArrayList<Shoppingcart>();
-                scart = da.getAllShoppingcart();
-
-                for (int i = 0; i < scart.size(); i++) {
-                    if (scart.get(i).getPengguna().getIdPengguna() == idPengguna) {//comment hbmxml user ke wish, tetep wish ke user
-                        sid.setIdShoppingcart(scart.get(i).getIdShoppingcart());
-                    }
-                }
-            }
-
-            sid.setIdBarang(idBarang);
-            temp.setId(sid);
-            temp.setQty(qty);
-
-            da.insertShoppingcartentry(temp);
-        }   
-            RequestDispatcher rd
-                            = request.getRequestDispatcher("shoppingcart.jsp");
-                    rd.forward(request, response);
-        }
+        System.out.println("==========================================================");
+        RequestDispatcher rd
+                = request.getRequestDispatcher("admin.jsp");
+        rd.forward(request, response);
     }
 
     /**

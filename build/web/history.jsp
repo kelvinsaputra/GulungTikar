@@ -109,7 +109,7 @@
                                             <td><h4>Status:</h4></td>
                                             <td><%= trx.get(i).getStatus()%> </td>
                                             <td>
-                                                <%if(!trx.get(i).getStatus().equalsIgnoreCase("sudah diterima")){ %>
+                                                <%if(!trx.get(i).getStatus().equalsIgnoreCase("sudah diterima") && !trx.get(i).getStatus().equalsIgnoreCase("Sukses")){ %>
                                                 <form action="konfirmasiServlet" method="GET">
                                                     <input class="btn btn-outline-success" type="submit" value="Konfirmasi Penerimaan">
                                                     <input type="hidden" name="idTrx" value="<%= trx.get(i).getIdTransaksi() %>"/>
