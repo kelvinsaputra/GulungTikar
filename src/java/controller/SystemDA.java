@@ -139,6 +139,51 @@ public class SystemDA {
         return hasil;
     }
     
+    public ArrayList<Barang> getAllBarangOrderbyNama() {
+        Session session = factory.openSession();
+        ArrayList<Barang> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang order by nama_barang asc");
+        hasil = (ArrayList<Barang>) q.list();
+        return hasil;
+    }
+    
+    public ArrayList<Barang> getAllBarangOrderbyHarga() {
+        Session session = factory.openSession();
+        ArrayList<Barang> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang order by harga_barang asc");
+        hasil = (ArrayList<Barang>) q.list();
+        return hasil;
+    }
+    
+    public ArrayList<Barang> searchBarang(String nama) {
+        Session session = factory.openSession();
+        ArrayList<Barang> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang where nama_barang like '%"+nama+"%'");
+        hasil = (ArrayList<Barang>) q.list();
+        return hasil;
+    }
+    
+    public ArrayList<Barang> searchBarangOrderbyNama(String nama) {
+        Session session = factory.openSession();
+        ArrayList<Barang> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang where nama_barang like '%"+nama+"%' order by nama_barang asc");
+        hasil = (ArrayList<Barang>) q.list();
+        return hasil;
+    }
+    
+    public ArrayList<Barang> searchBarangOrderbyHarga(String nama) {
+        Session session = factory.openSession();
+        ArrayList<Barang> hasil = null;
+        Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Barang where nama_barang like '%"+nama+"%' order by harga_barang asc");
+        hasil = (ArrayList<Barang>) q.list();
+        return hasil;
+    }
+    
     public Barang getBarangByID(int idBarang)
     {
         Session session = factory.openSession();

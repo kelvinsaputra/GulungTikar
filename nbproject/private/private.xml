@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/web/userprofile.jsp</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/web/transaksi.jsp</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/controller/PenggunaDA.java</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/web/shoppingcart.jsp</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/servlet/deleteShoppingCartEntry.java</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/web/index.jsp</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/web/history.jsp</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/servlet/transaksiServlet.java</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/controller/konfirmasiServlet.java</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/controller/SystemDA.java</file>
-            <file>file:/D:/Documents/Ferdinand/RPLL/GulungTikar/src/java/servlet/orderEntryServlets.java</file>
+            <file>file:/E:/Kuliah/RPLL/GulungTikar/web/nav.jsp</file>
+            <file>file:/E:/Kuliah/RPLL/GulungTikar/web/index.jsp</file>
+            <file>file:/E:/Kuliah/RPLL/GulungTikar/web/search.jsp</file>
+            <file>file:/E:/Kuliah/RPLL/GulungTikar/src/java/controller/SystemDA.java</file>
         </group>
     </open-files>
 </project-private>

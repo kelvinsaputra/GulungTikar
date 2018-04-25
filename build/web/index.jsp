@@ -60,7 +60,6 @@
                 <!-- /.col-lg-3 -->
 
                 <div class="col-lg-12">
-
                     <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -98,8 +97,8 @@
                                 <button class="btn btn-primary dropdown-toggle ml-auto" type="button" data-toggle="dropdown">Sort
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu drop">
-                                    <li class="dropdown-item"><a href="#">Customer ID</a></li>
-                                    <li class="dropdown-item"><a href="#">Name</a></li>
+                                    <li class="dropdown-item"><a href="index.jsp?sort=1">Name</a></li>
+                                    <li class="dropdown-item"><a href="index.jsp?sort=2">Price</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -107,7 +106,20 @@
 
                         <%
                             SystemDA da = new SystemDA();
-                            ArrayList<Barang> listBarang =  da.getAllBarang();
+                            int sortType = 0;
+                            try{
+                                sortType = Integer.parseInt(request.getParameter("sort"));
+                            }catch(Exception ex){}
+                            ArrayList<Barang> listBarang =  null;
+                            if(sortType==0){
+                                listBarang = da.getAllBarang();
+                            }else{
+                                if(sortType ==1){
+                                    listBarang = da.getAllBarangOrderbyNama();
+                                }else{
+                                    listBarang = da.getAllBarangOrderbyHarga();
+                                }
+                            }
                             Set<Etalase> listEtalase;
                             for (int i = 0; i < listBarang.size(); i++) {
                         %>    

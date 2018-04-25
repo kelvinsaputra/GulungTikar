@@ -1,19 +1,16 @@
 <%-- 
-    Document   : index
-    Created on : Mar 2, 2018, 10:31:09 AM
-    Author     : fsury
+    Document   : search
+    Created on : Apr 25, 2018, 12:09:24 PM
+    Author     : LENOVO
 --%>
 
 <%@page import="model.Pengguna"%>
 <%@page import="model.Toko"%>
-<%@page import="java.util.List"%>
 <%@page import="java.util.Set"%>
 <%@page import="model.Etalase"%>
-<%@page import="java.util.HashSet"%>
 <%@page import="model.Barang"%>
-<%@page import="controller.SystemDA"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Session"%>
+<%@page import="controller.SystemDA"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,7 +21,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Shop Homepage - Search</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,30 +33,25 @@
     </head>
 
     <body>
-
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
         <%
             System.out.print((String) request.getSession(false).getAttribute("username"));
         %>
+
         <!-- Page Content -->
         <div class="container">
 
             <div class="row">
-
-                <!--                <div class="col-lg-3">
-                
-                                    <h1 class="my-4">Shop Name</h1>
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item">Category 1</a>
-                                        <a href="#" class="list-group-item">Category 2</a>
-                                        <a href="#" class="list-group-item">Category 3</a>
-                                    </div>z
-                
-                                </div>-->
-                <!-- /.col-lg-3 -->
-
                 <div class="col-lg-12">
+                    <% int sortType = 0;
+                       String namaBrg = (String) request.getParameter("nama");
+                        try{
+                            sortType = Integer.parseInt(request.getParameter("sort"));
+                        }catch(Exception e){
+                            session.setAttribute("search", namaBrg);
+                        }
+                    %>
                     <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -89,62 +81,66 @@
 
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>Recently Added</h3>
+                            <h3>Search Result</h3>
                         </div>
 
                         <div class="ml-auto">
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle ml-auto" type="button" data-toggle="dropdown">Sort
                                     <span class="caret"></span></button>
-                                <ul class="dropdown-menu drop">
-                                    <li class="dropdown-item"><a href="index.jsp?sort=1">Name</a></li>
-                                    <li class="dropdown-item"><a href="index.jsp?sort=2">Price</a></li>
-                                </ul>
+                                        <ul class="dropdown-menu drop">
+                                            <li class="dropdown-item"><a href="search.jsp?sort=1">Name</a></li>
+                                            <li class="dropdown-item"><a href="search.jsp?sort=2">Price</a></li>
+                                        </ul>
                             </div>
                         </div>
                         <hr class="col-12">
 
                         <%
+                            String nama = (String) session.getAttribute("search");
                             SystemDA da = new SystemDA();
-                            int sortType = 0;
-                            try{
-                                sortType = Integer.parseInt(request.getParameter("sort"));
-                            }catch(Exception ex){}
-                            ArrayList<Barang> listBarang =  null;
+                            ArrayList<Barang> listBarang = null;
                             if(sortType==0){
-                                listBarang = da.getAllBarang();
+                                listBarang = da.searchBarang(nama);
                             }else{
                                 if(sortType ==1){
-                                    listBarang = da.getAllBarangOrderbyNama();
+                                    listBarang = da.searchBarangOrderbyNama(nama);
                                 }else{
-                                    listBarang = da.getAllBarangOrderbyHarga();
+                                    listBarang = da.searchBarangOrderbyHarga(nama);
                                 }
                             }
+                            
                             Set<Etalase> listEtalase;
-                            for (int i = 0; i < listBarang.size(); i++) {
+                            if(listBarang.size()>0){
+                                for (int i = 0; i < listBarang.size(); i++) {
                         %>    
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="barang.jsp?idBarang=<%=listBarang.get(i).getIdBarang()%>"><img class="card-img-top" src="res/<%= listBarang.get(i).getIdBarang()%>.jpg" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="barang.jsp?idBarang=<%=listBarang.get(i).getIdBarang()%>"><%= listBarang.get(i).getNamaBarang()%></a>
-                                    </h4>
-                                    <h5>Rp. <%= listBarang.get(i).getHargaBarang()%>,00</h5>
-                                    <%
-                                        Etalase etalase = da.getEtalaseByID(listBarang.get(i).getIdBarang());
-                                        Toko toko = etalase.getToko();
-                                        Pengguna pengguna = toko.getPengguna();
-                                    %>
-                                    <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
-                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <a href="barang.jsp?idBarang=<%=listBarang.get(i).getIdBarang()%>"><img class="card-img-top" src="res/<%= listBarang.get(i).getIdBarang()%>.jpg" alt=""></a>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <a href="barang.jsp?idBarang=<%=listBarang.get(i).getIdBarang()%>"><%= listBarang.get(i).getNamaBarang()%></a>
+                                            </h4>
+                                            <h5>Rp. <%= listBarang.get(i).getHargaBarang()%>,00</h5>
+                                            <%
+                                                Etalase etalase = da.getEtalaseByID(listBarang.get(i).getIdBarang());
+                                                Toko toko = etalase.getToko();
+                                                Pengguna pengguna = toko.getPengguna();
+                                            %>
+                                            <p class="card-text"><%=pengguna.getNama()%>'s Shop</p>
+                                        </div>
                                 <div class="card-footer">
                                     <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                                 </div>
                             </div>
                         </div>
-                        <% }%>
+                                 <% } %>
+                        <% } else { %>
+                        <br><br><br>
+                        <h4 style="color: red;">Oops... hasil pencarian anda tidak dapat ditemukan.</h4>
+                        <h5>Silahkan melakukan pencarian kembali dengan menggunakan kata kunci lain.</h5>
+                            <br><br><br><br><br><br>
+                        <% } %>
                     </div>
                     <!-- /.row -->
 
@@ -164,7 +160,7 @@
             </div>
             <!-- /.container -->
         </footer>
-
+        
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

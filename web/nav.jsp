@@ -22,9 +22,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <div class="col-7 mr-auto">
                 <div class="col-12">
-                    <form class="form-inline" action="#" method="GET">
+                    <form class="form-inline" action="search.jsp" method="GET">
                         <div class="form-group col-10">
-                            <input type="text" class="form-control col-12"/>
+                            <input type="text" name="nama" id="nama" class="form-control col-12"/>
                         </div>
                         <div class="form-group col-2">
                             <input type="submit" class="btn btn-primary" value="Search"/>
