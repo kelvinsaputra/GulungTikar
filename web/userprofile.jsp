@@ -82,14 +82,10 @@
             <%if(!request.getSession(false).getAttribute("type").equals("Admin")){%>
             <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'editprofile')">Edit Profile</button>
             <%
-                if (request.getSession(false).getAttribute("type").equals("Penjual")) {
+                if (request.getSession(false).getAttribute("type").equals("Pembeli")) {
             %>
-            <button class="tablinks" onclick="openTab(event, 'manageshop')">Manage Shop</button>
-            <%
-                } else {
-            %>
-            <button id="wishlist" class="tablinks" onclick="openTab(event, 'manageshop')">Wishlist</button>
-            <a href="history.jsp"><button id="history" class="tablinks" onclick="openTab(event, 'history')">Transaction History</button></a>
+                <button id="wishlist" class="tablinks" onclick="openTab(event, 'manageshop')">Wishlist</button>
+                <a href="history.jsp"><button id="history" class="tablinks" onclick="openTab(event, 'history')">Transaction History</button></a>
             <%
                 }
             }   
@@ -124,15 +120,47 @@
                                     }
                                 }
                             %>
-                            Email : <%=temp.getEmail()%>
-                            Rekening : <%=temp.getNoRekening()%>
-                            Saldo : <%=temp.getSaldo()%>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        Email
+                                    </td>
+                                    <td>
+                                        <%=temp.getEmail()%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Rekening
+                                    </td>
+                                    <td>
+                                        <%=temp.getNoRekening()%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Saldo
+                                    </td>
+                                    <td>
+                                        <%=temp.getSaldo()%>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <hr>
                         <div class="col-12">
                             <h2>Edit Your Profile</h2>
-                            <form action="" method="post">
+                            <form action="editProfileServlet" method="post">
+                                
                                 <div class="form-group">
+                                    <input class="form-control" id="password" name="password" type="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input class="form-control" id="password_two" name="password_two" type="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Verify Password" required>
+                                </div>
+                                
+<!--                                <div class="form-group">
                                     <input type="password" class="form-control" id="editPassword" placeholder="New Password">
                                 </div>
                                 <div class="form-group">
@@ -143,7 +171,8 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="editAddress" placeholder="New Address">
-                                </div>
+                                </div>-->
+
                                 <button class="btn btn-danger">Cancel</button>
                                 <button class="btn btn-success">Save</button>
                             </form>

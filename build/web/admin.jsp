@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>GulungTikar Register</title>
+        <title>Gulung Tikar Admin</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -111,7 +111,6 @@
                                                     <input type="hidden" name="idTrx" value="<%= trx.get(i).getIdTransaksi() %>"/>
                                                 </form>
                                             </td>
-
                                         </tr>
                                     </tbody>
                                 </table>
@@ -119,7 +118,10 @@
                         </div>
                     </div>
                 </div>
-                <%}%>
+                <%
+                    total=0;
+                    }
+                %>
             </div>
         </div>
         <br>

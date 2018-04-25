@@ -121,4 +121,11 @@ public class PenggunaDA {
         s.getTransaction().commit();
     }
     
+    public void updatePassword(int idPengguna, String newPass)  {
+        s.beginTransaction();
+        Query query = s.createQuery("update Pengguna set password = '"+newPass+"' where id_pengguna = " + idPengguna);
+        int exec = query.executeUpdate();
+        s.getTransaction().commit();
+    }
+    
 }

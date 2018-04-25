@@ -5,29 +5,26 @@
  */
 package servlet;
 
+import controller.PenggunaDA;
 import controller.SystemDA;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Toko;
 
 /**
  *
- * @author user
+ * @author fsury
  */
-@WebServlet(name = "editToko", urlPatterns = {"/editToko"})
-public class editToko extends HttpServlet {
+@WebServlet(name = "editProfileServlet", urlPatterns = {"/editProfileServlet"})
+public class editProfileServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -42,10 +39,10 @@ public class editToko extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet editToko</title>");
+            out.println("<title>Servlet editProfileServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet editToko at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet editProfileServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,20 +75,13 @@ public class editToko extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-
-        SystemDA da = new SystemDA();
-        /*int newStatus = 0;
-
-        if (request.getParameter("status").equals("true")) {
-            newStatus = 1;
-        }
-        BUAT APAAAAAAAAAAAAAAAAAAAAAAAAA
-        */
-
-        da.updateToko(Integer.parseInt(request.getParameter("idToko")),Integer.parseInt(request.getParameter("status")), request.getParameter("alamat"));
-
+        String password = new SystemDA().MD5(request.getParameter("password"));
+        int id = (int) request.getSession(false).getAttribute("idPengguna");
+        
+        new PenggunaDA().updatePassword(id, password);
+        request.getSession(false).invalidate();
         RequestDispatcher rd
-                = request.getRequestDispatcher("profiletoko.jsp");
+                = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
 

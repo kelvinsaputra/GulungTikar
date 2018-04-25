@@ -60,9 +60,7 @@ public class konfirmasiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request,response);
-        int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
         int idTrx = Integer.parseInt(request.getParameter("idTrx"));
-        System.out.println(idPengguna);
         System.out.println(idTrx);
 
         new PenggunaDA().updateStatus(idTrx);

@@ -21,7 +21,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>GulungTikar Register</title>
+        <title>Gulung Tikar History</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +53,6 @@
                 <h1>Transaction History</h1>
                 <% for (int i = 0; i < trx.size(); i++) {
                         ArrayList<Orderentry> order = new SystemDA().getOrderEntryByID(trx.get(i).getIdTransaksi());
-                        System.out.print("=====================================" + order.size());
                 %>
 
                 <div class="col-lg-12 col-md-6 mb-4">
