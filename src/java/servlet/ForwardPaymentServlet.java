@@ -83,6 +83,7 @@ public class ForwardPaymentServlet extends HttpServlet {
         int idPengguna = (Integer) request.getSession(false).getAttribute("idPengguna");
         int idTrx = Integer.parseInt(request.getParameter("idTrx"));
         
+        
         AdminDA ada = new AdminDA();
         ada.updateStatus(idTrx);
         
@@ -95,7 +96,7 @@ public class ForwardPaymentServlet extends HttpServlet {
             int idToko = et.getToko().getIdToko();
             Toko toko = da.getTokoById(idToko);
             Pengguna penjual = toko.getPengguna();
-            int saldo = penjual.getSaldo() + hargaBarang;
+            int saldo = penjual.getSaldo() + hargaBarang * oe.get(i).getQty();
             ada.updateSaldo(penjual.getIdPengguna(), saldo);
         }
         System.out.println("==========================================================");

@@ -77,13 +77,13 @@
                                 <div class="col-sm-2 hidden-xs"><img class="tab-pane" src="res/<%= sce.get(i).getBarang().getIdBarang()%>.jpg" alt="..." class="img-responsive"/></div>
                                 <div class="col-sm-10" style="padding-left: 10%;">
                                     <h4 class="nomargin"><%= sce.get(i).getBarang().getNamaBarang() %></h4>
-                                    <p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+                                    
                                 </div>
                             </div>
                         </td>
                         <td data-th="Price">Rp. <%= sce.get(i).getBarang().getHargaBarang() %></td>
                         <td data-th="Quantity">
-                            <input type="number" class="form-control text-center" value='<%= sce.get(i).getQty() %>' min="0">
+                            <input type="number" class="form-control text-center" value='<%= sce.get(i).getQty() %>' min="0" disabled="true" >
                         </td>
                         
                         <td data-th="Subtotal" class="text-center"></td>

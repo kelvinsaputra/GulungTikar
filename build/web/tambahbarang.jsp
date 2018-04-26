@@ -30,55 +30,64 @@
     </head>
 
     <body>
-        
+
         <!-- Navigation -->
         <jsp:include page="nav.jsp"/>
-<%
-    System.out.print((String) request.getSession(false).getAttribute("username"));
-%>
+        <%
+            System.out.print((String) request.getSession(false).getAttribute("username"));
+        %>
         <!-- Page Content -->
         <div class="container">
-            <center><h1>Insert Barang</h1></center>
-        <form enctype="multipart/form-data" action="tambahbarangServlet?idToko=<%=Integer.parseInt(request.getParameter("idToko"))%>" method="post">
-             <div class="form-group">
-            Nama Barang : <input type="text" name="namabarang">
-             </div>
-             <div class="form-group">
-            Harga Barang : <input type="text" name="hargabarang">
-             </div>
-             <div class="form-group">
-                 Pilih kategori :<br>
-            <%
-                SystemDA da = new SystemDA();
-                ArrayList<Kategori> kategori= new ArrayList<Kategori>();
-                kategori = da.getAllKategori();
+            <div class="row">
+                <div class="col-12">
+                    <center><h1>Insert Barang</h1></center>
+                </div>
+                <div class="col-6">
+                    <form enctype="multipart/form-data" action="tambahbarangServlet?idToko=<%=Integer.parseInt(request.getParameter("idToko"))%>" method="post">
+                        <div class="form-group">
+                            <label>Nama Barang :</label>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="namabarang">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Harga Barang :</label>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="hargabarang">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            Pilih kategori :<br>
+                            <%
+                                SystemDA da = new SystemDA();
+                                ArrayList<Kategori> kategori = new ArrayList<Kategori>();
+                                kategori = da.getAllKategori();
 
-                if(kategori!=null){
-                    for(int i=0;i<kategori.size();i++){
-            %>
-            <input type="radio" name="type" value="<%=kategori.get(i).getIdKategori()%>"> <%=kategori.get(i).getNamaKategori()%><br>
-            <%
-                    }                    
-                }
+                                if (kategori != null) {
+                                    for (int i = 0; i < kategori.size(); i++) {
+                            %>
+                            <input type="radio" name="type" value="<%=kategori.get(i).getIdKategori()%>"> <%=kategori.get(i).getNamaKategori()%><br>
+                            <%
+                                    }
+                                }
 
-            %>
-           </div>
-           <div class="form-group">
-           Upload Picture : <input type="file" name="file" id="file"  >
-           </div>
-            <button type="submit"> Tambah Barang! </button>
-            <br>
-        </form>
+                            %>
+                        </div>
+                        <div class="form-group">
+                            Upload Picture : <input type="file" name="file" id="file"  >
+                        </div>
+                        <button class="btn btn-primary" type="submit"> Tambah Barang </button>
+                        <br>
+                    </form>
+                </div>
+
+            </div>
         </div>
         <!-- /.container -->
 
         <!-- Footer -->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
-            </div>
-            <!-- /.container -->
-        </footer>
+        <jsp:include page="footer.jsp"/>
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

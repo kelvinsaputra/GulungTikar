@@ -36,6 +36,7 @@
             <div>
                 <ul class="navbar-nav ml-auto">
                     <%
+                        
                         String statusLogin = (String) request.getSession(false).getAttribute("statusLogin");
                         String username=null;
                         int idPengguna=-1;
@@ -60,25 +61,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="login.jsp">Log in</a>
                         </li>
-                        <%} else {%>
+                        <%} else {
+                        Pengguna isAdmin = new SystemDA().getUserById(idPengguna);
+                        if(!isAdmin.getType().equals("Admin")){
+                        %>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="userprofile.jsp">My profile</a>
+                            <a class="nav-link text-white" href="userprofile.jsp">My Profile</a>
                         </li>
                         <%
-                        
-                      /* ArrayList<Toko> toko = new ArrayList<Toko>();
-                        SystemDA da = new SystemDA();
-                        toko = da.getAllToko();
-                        boolean ketemu=false;
-
-                        for(int i=0; i<toko.size();i++){
-                            if(toko.get(i).getPengguna().getIdPengguna()==idPengguna){
-                                ketemu = true; //cek semua toko ada yg dipunyain sama yg lagi login ga, kalo ada oke, kalo belom buttonnya buka Toko!
-                            }
-                        }
-                        
-                        
-*/
                        Pengguna pengguna = new SystemDA().getUserById(idPengguna);
                        if(pengguna.getType().equals("Penjual")){
                     %>        
@@ -93,7 +83,7 @@
                             <a class="nav-link text-white" href="shoppingcart.jsp">Shopping Cart</a>
                         </li>  
                         <%
-                            }%>
+                            }}%>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="logoutServlet">Logout</a>
                         </li>
